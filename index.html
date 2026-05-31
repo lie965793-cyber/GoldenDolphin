@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Dolphin Records</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: rgba(255, 252, 245, 0.94);
+      --ink: #1a1b1d;
+      --muted: #5f646c;
+      --line: #d7d1c5;
+      --gold: #a06b2d;
+      --teal: #2f6a73;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(47,106,115,.14), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(160,107,45,.18), transparent 24%),
+        linear-gradient(180deg, #f7f2e9 0%, #ece7dc 100%);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 20px 60px rgba(52, 39, 21, .08);
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(47,106,115,.1);
+      color: var(--teal);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      line-height: 1.1;
+    }
+    .lead {
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(52, 39, 21, .07);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(52, 39, 21, .12);
+      border-color: var(--gold);
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(160,107,45,.12);
+      color: var(--gold);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .footer {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Golden Dolphin Divine Records</div>
+      <h1>记录入口</h1>
+      <p class="lead">
+        这个页面提供两份主要浏览入口。一份是按案件时间线组织的事件浏览页，适合从全局查看每个案件的起因、发展和细节；另一份是人物小传页，适合按人物切换查看群内形象、关系网络与代表性叙述。
+      </p>
+    </section>
+
+    <section class="grid">
+      <a class="card" href="case-timeline.html">
+        <div class="tag">Timeline</div>
+        <h2>案件时间线</h2>
+        <p>按时间线进入所有案件。首页先看一级目录，点开后可查看单个案件细节，并随时返回时间线总览。</p>
+      </a>
+
+      <a class="card" href="character-biographies.html">
+        <div class="tag">Biographies</div>
+        <h2>人物小传</h2>
+        <p>按人物切换查看四份人物传记，快速对比他们的群内角色、发言风格、关系网络与事件位置。</p>
+      </a>
+    </section>
+
+    <div class="footer">
+      建议分享首页地址，避免直接暴露内部文件名。
+    </div>
+  </div>
+</body>
+</html>
