@@ -14,6 +14,7 @@
       --accent: #9c4d2f;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
@@ -39,6 +40,17 @@
     .grid strong { display: block; font-size: 12px; color: var(--accent); margin-bottom: 5px; }
     .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
     .nav a { color: var(--accent); text-decoration: none; font-weight: 700; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .links a {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 700;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+    }
   </style>
 </head>
 <body>
@@ -51,9 +63,38 @@
         <a href="period-analysis.html">分期总论</a>
         <a href="character-biographies.html">四人角色</a>
       </div>
+      <div class="links">
+        <a href="#case-5">5</a>
+        <a href="#case-7">7</a>
+        <a href="#case-15">15</a>
+        <a href="#case-19">19</a>
+        <a href="#case-21">21</a>
+        <a href="#case-22">22</a>
+        <a href="#case-23">23</a>
+        <a href="#case-24">24</a>
+        <a href="#case-26">26</a>
+        <a href="#case-27">27</a>
+        <a href="#case-28">28</a>
+        <a href="#case-30">30</a>
+        <a href="#case-31">31</a>
+        <a href="#case-34">34</a>
+        <a href="#case-36">36</a>
+        <a href="#case-37">37</a>
+        <a href="#case-38">38</a>
+        <a href="#case-39">39</a>
+        <a href="#case-40">40</a>
+        <a href="#case-43">43</a>
+        <a href="#case-44">44</a>
+        <a href="#case-47">47</a>
+        <a href="#case-55">55</a>
+        <a href="#case-56">56</a>
+        <a href="#case-57">57</a>
+        <a href="#case-58">58</a>
+        <a href="#case-62">62</a>
+      </div>
     </section>
     <section class="list">
-      <article class="case">
+      <article class="case" id="case-19">
         <div class="meta">案件 19 · 2026-05-24 · 关系定型</div>
         <h2>留学身份与说教姿态升级</h2>
         <div class="grid">
@@ -65,7 +106,7 @@
           <div><strong>结果</strong><span>“留学身份”“高位说教”“是否装”成为后续反复调用的旧标签。</span></div>
         </div>
       </article>
-      <article class="case">
+      <article class="case" id="case-27">
         <div class="meta">案件 27 · 2026-05-26 · 人身化升级</div>
         <h2>学历真伪、求职结果与作品含金量</h2>
         <div class="grid">
@@ -77,7 +118,7 @@
           <div><strong>结果</strong><span>这是旧时期最典型的人身化案件，学历、留学、装逼标签由此定型。</span></div>
         </div>
       </article>
-      <article class="case">
+      <article class="case" id="case-38">
         <div class="meta">案件 38 · 2026-05-27 · 风格定型</div>
         <h2>“成圣学”与造谣指控</h2>
         <div class="grid">
@@ -89,7 +130,7 @@
           <div><strong>结果</strong><span>程序-策划此后被固定进“成圣学”框架，表达方式被持续梗化。</span></div>
         </div>
       </article>
-      <article class="case">
+      <article class="case" id="case-56">
         <div class="meta">案件 56 · 2026-05-30 · 责任案卷化</div>
         <h2>炸队责任与跑路指控</h2>
         <div class="grid">
@@ -101,10 +142,29 @@
           <div><strong>结果</strong><span>这是旧时期最接近正式案卷的一案，也直接逼近新时期的管理分界线。</span></div>
         </div>
       </article>
-      <article class="case">
-        <div class="meta">支线案</div>
-        <h2>5 / 7 / 15 / 21 / 22 / 23 / 24 / 26 / 28 / 30 / 31 / 34 / 36 / 37 / 39 / 40 / 43 / 44 / 47 / 55 / 57 / 58 / 62</h2>
-      </article>
+      <article class="case" id="case-5"><div class="meta">案件 5 · 2026-05-19 · 预热案</div><h2>组队试探与轻度摩擦</h2><div class="grid"><div><strong>起因</strong><span>围绕组队、题材和个人能力边界展开试探。</span></div><div><strong>升级点</strong><span>尚未形成明确敌对，但熟人化调侃和轻微压制已经出现。</span></div><div><strong>结果</strong><span>为后续四人冲突提供了最早的互动语境。</span></div></div></article>
+      <article class="case" id="case-7"><div class="meta">案件 7 · 2026-05-20 · 预热案</div><h2>学历与职业价值争论</h2><div class="grid"><div><strong>起因</strong><span>裤从学历对找工作是否有用切入。</span></div><div><strong>升级点</strong><span>讨论开始触碰“谁更有资格评价职业路径”。</span></div><div><strong>结果</strong><span>发言资格问题第一次被明确抛出。</span></div></div></article>
+      <article class="case" id="case-15"><div class="meta">案件 15 · 2026-05-22 · 预热案</div><h2>项目话语权争夺</h2><div class="grid"><div><strong>起因</strong><span>围绕项目方向、岗位组合和个人目标密集发言。</span></div><div><strong>升级点</strong><span>讨论从合作转成抢话语权和定位优势。</span></div><div><strong>结果</strong><span>四人开始频繁同场，半竞争气氛成型。</span></div></div></article>
+      <article class="case" id="case-21"><div class="meta">案件 21 · 2026-05-25 · 节奏案</div><h2>群聊节奏与插话失控</h2><div class="grid"><div><strong>起因</strong><span>多人同时切入不同话题。</span></div><div><strong>升级点</strong><span>矛盾转成谁在带节奏、谁在搅局。</span></div><div><strong>结果</strong><span>“这个群容易被带节奏”的印象被固定。</span></div></div></article>
+      <article class="case" id="case-22"><div class="meta">案件 22 · 2026-05-25 · 节奏案</div><h2>项目观念与技术路线不合</h2><div class="grid"><div><strong>起因</strong><span>讨论进入更具体的工作流与项目路线。</span></div><div><strong>升级点</strong><span>轻微否定开始转成人对人判断。</span></div><div><strong>结果</strong><span>彼此的预设成见被加深。</span></div></div></article>
+      <article class="case" id="case-23"><div class="meta">案件 23 · 2026-05-25 · 节奏案</div><h2>表达姿态与人设摩擦</h2><div class="grid"><div><strong>起因</strong><span>开始出现对说话方式和装腔作势的评论。</span></div><div><strong>升级点</strong><span>玩笑转成人格与风格否定。</span></div><div><strong>结果</strong><span>人设化冲突进入可随时升级状态。</span></div></div></article>
+      <article class="case" id="case-24"><div class="meta">案件 24 · 2026-05-25 · 节奏案</div><h2>经验资历试探</h2><div class="grid"><div><strong>起因</strong><span>多方围绕经验与履历互相试探。</span></div><div><strong>升级点</strong><span>焦点落到谁更懂、谁更有资格。</span></div><div><strong>结果</strong><span>为后续身份冲突铺路。</span></div></div></article>
+      <article class="case" id="case-26"><div class="meta">案件 26 · 2026-05-26 · 节奏案</div><h2>轻松话题下的立场夹带</h2><div class="grid"><div><strong>起因</strong><span>原本是轻松闲聊。</span></div><div><strong>升级点</strong><span>程序-策划与 Eggnisi 出场后开始夹带个人姿态。</span></div><div><strong>结果</strong><span>两人的表达冲突继续积累。</span></div></div></article>
+      <article class="case" id="case-28"><div class="meta">案件 28 · 2026-05-26 · 复盘案</div><h2>大战后公开复盘</h2><div class="grid"><div><strong>起因</strong><span>裤主动提起刚结束的对线。</span></div><div><strong>升级点</strong><span>个人冲突被转写成可公共消费的战况回顾。</span></div><div><strong>结果</strong><span>群体记忆开始围绕主线案 27 生成。</span></div></div></article>
+      <article class="case" id="case-30"><div class="meta">案件 30 · 2026-05-26 · 节奏案</div><h2>抽象表达与项目幻想碰撞</h2><div class="grid"><div><strong>起因</strong><span>裤谈 AR/真人 CS 设想。</span></div><div><strong>升级点</strong><span>程序-策划的抽象表达被群体调侃。</span></div><div><strong>结果</strong><span>“抽象表达者”形象被加固。</span></div></div></article>
+      <article class="case" id="case-31"><div class="meta">案件 31 · 2026-05-26 · 节奏案</div><h2>外包与职业鄙视链</h2><div class="grid"><div><strong>起因</strong><span>从外语和外包话题谈到研发路径。</span></div><div><strong>升级点</strong><span>职业判断迅速带出价值高低排序。</span></div><div><strong>结果</strong><span>鄙视链视角被带进旧时期底色。</span></div></div></article>
+      <article class="case" id="case-34"><div class="meta">案件 34 · 2026-05-27 · 元讨论案</div><h2>为什么要对线</h2><div class="grid"><div><strong>起因</strong><span>Eggnisi 公开谈自己喜欢对线。</span></div><div><strong>升级点</strong><span>讨论对象从具体案情转成“对线本身的正当性”。</span></div><div><strong>结果</strong><span>很多后续打法都能从这里反向理解。</span></div></div></article>
+      <article class="case" id="case-36"><div class="meta">案件 36 · 2026-05-27 · 理论案</div><h2>AI、工资与剥削理论</h2><div class="grid"><div><strong>起因</strong><span>程序-策划从 AI 是否取代劳动切入。</span></div><div><strong>升级点</strong><span>讨论迅速上升到社会理论层面。</span></div><div><strong>结果</strong><span>程序-策划的宏大叙事风格被彻底暴露。</span></div></div></article>
+      <article class="case" id="case-37"><div class="meta">案件 37 · 2026-05-27 · 理论案</div><h2>重构示范与技术展示</h2><div class="grid"><div><strong>起因</strong><span>程序-策划用代码和重构例子建立解释权。</span></div><div><strong>升级点</strong><span>技术展示被他人快速娱乐化。</span></div><div><strong>结果</strong><span>为案件 38 的风格冲突提供直接材料。</span></div></div></article>
+      <article class="case" id="case-39"><div class="meta">案件 39 · 2026-05-27 · 续战案</div><h2>夜间再开辩经</h2><div class="grid"><div><strong>起因</strong><span>Eggnisi 夜间再次公开喊话。</span></div><div><strong>升级点</strong><span>争论内容退居次要，重点变成持续占据舞台。</span></div><div><strong>结果</strong><span>案件 38 被延长成连续剧。</span></div></div></article>
+      <article class="case" id="case-40"><div class="meta">案件 40 · 2026-05-27 · 余波案</div><h2>项目理解与信任残留</h2><div class="grid"><div><strong>起因</strong><span>讨论继续围绕项目组织与理解能力展开。</span></div><div><strong>升级点</strong><span>争论焦点转成“彼此是否值得信任”。</span></div><div><strong>结果</strong><span>为后来的炸队责任案继续蓄压。</span></div></div></article>
+      <article class="case" id="case-43"><div class="meta">案件 43 · 2026-05-28 · 余波案</div><h2>旧冲突再点燃</h2><div class="grid"><div><strong>起因</strong><span>旧标签被带入新话题继续使用。</span></div><div><strong>升级点</strong><span>简单对话被旧案背景迅速抬高强度。</span></div><div><strong>结果</strong><span>说明冲突已从事件变成持续背景。</span></div></div></article>
+      <article class="case" id="case-44"><div class="meta">案件 44 · 2026-05-28 · 余波案</div><h2>人设与群体记忆再生产</h2><div class="grid"><div><strong>起因</strong><span>交流已带上明显的人设化标签。</span></div><div><strong>升级点</strong><span>争论变成“别人会怎么记住我和你”。</span></div><div><strong>结果</strong><span>传播价值开始超过事实本身。</span></div></div></article>
+      <article class="case" id="case-47"><div class="meta">案件 47 · 2026-05-29 · 文本化案</div><h2>禁言传闻与群外文本攻击</h2><div class="grid"><div><strong>起因</strong><span>冲突从即时聊天延伸到长文、截图和传闻。</span></div><div><strong>升级点</strong><span>人物形象开始被二次文本固定。</span></div><div><strong>结果</strong><span>旧时期出现明显的二次文档化倾向。</span></div></div></article>
+      <article class="case" id="case-55"><div class="meta">案件 55 · 2026-05-30 · 回场案</div><h2>“我复活了”与旧案再开机</h2><div class="grid"><div><strong>起因</strong><span>Eggnisi 以“我复活了”重新入场。</span></div><div><strong>升级点</strong><span>旧梗、拉黑关系和战斗背景被瞬间重新激活。</span></div><div><strong>结果</strong><span>旧案并未结束，只是被戏剧化重演。</span></div></div></article>
+      <article class="case" id="case-57"><div class="meta">案件 57 · 2026-05-30 · 余波案</div><h2>战后闲聊中的持续阴影</h2><div class="grid"><div><strong>起因</strong><span>轻松聊天里仍不断带出旧关系阴影。</span></div><div><strong>升级点</strong><span>即使不激烈，背景敌意也仍在说话方式里。</span></div><div><strong>结果</strong><span>冲突已经内化为日常互动底色。</span></div></div></article>
+      <article class="case" id="case-58"><div class="meta">案件 58 · 2026-05-30 · 节奏案</div><h2>岗位边界与指点式发言</h2><div class="grid"><div><strong>起因</strong><span>程序-策划从“什么叫功能程序”切入。</span></div><div><strong>升级点</strong><span>岗位定义再次变成争话语权的工具。</span></div><div><strong>结果</strong><span>程序-策划与 Eggnisi 的表达差异再次被凸显。</span></div></div></article>
+      <article class="case" id="case-62"><div class="meta">案件 62 · 2026-05-31 · 黑色幽默案</div><h2>四人组队玩笑</h2><div class="grid"><div><strong>起因</strong><span>Eggnisi 主动点名四人组队。</span></div><div><strong>升级点</strong><span>敌对关系被临时转写成“全神队”式黑色幽默。</span></div><div><strong>结果</strong><span>四人关系被彻底群体叙事化、角色化。</span></div></div></article>
     </section>
   </div>
 </body>
