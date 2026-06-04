@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>冲突案件时间线</title>
+  <title>旧金海豚案件时间线</title>
   <style>
     :root {
-      --bg: #f5f1e8;
-      --paper: #fffdf7;
-      --ink: #1f1a16;
-      --muted: #6c5f53;
+      --bg: #f5f0e6;
+      --paper: rgba(255, 252, 246, .96);
+      --ink: #1d1a17;
+      --muted: #62584f;
       --line: #d8c8b5;
-      --accent: #a84e2c;
-      --accent-soft: #f0d8cb;
+      --accent: #9c4d2f;
+      --accent-soft: #f0ddd3;
+      --accent-2: #335e66;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -21,1110 +22,337 @@
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top right, #f7d9c8 0, transparent 28%),
-        linear-gradient(180deg, #f6efe5 0%, #efe6d8 100%);
+        radial-gradient(circle at top right, rgba(156,77,47,.14), transparent 26%),
+        radial-gradient(circle at top left, rgba(51,94,102,.12), transparent 24%),
+        linear-gradient(180deg, #f7f1e8 0%, #ece2d2 100%);
     }
+    a { color: var(--accent-2); }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
-    .hero {
-      background: rgba(255,253,247,.9);
+    .panel {
+      background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 26px;
       padding: 28px;
       box-shadow: 0 18px 50px rgba(76, 45, 25, .08);
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: 32px; margin-bottom: 10px; }
-    .sub { color: var(--muted); line-height: 1.7; max-width: 900px; }
-    .timeline {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      margin-bottom: 36px;
+    h1 { font-size: 38px; margin-bottom: 10px; }
+    h2 { font-size: 28px; margin-bottom: 14px; }
+    h3 { font-size: 22px; margin-bottom: 10px; }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(156,77,47,.1);
+      color: var(--accent);
+      font-size: 13px;
+      margin-bottom: 12px;
     }
-    .timeline-card {
-      display: block;
+    .sub, .panel p, .panel li { color: var(--muted); line-height: 1.8; }
+    .nav {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nav a {
       text-decoration: none;
-      color: inherit;
-      background: var(--paper);
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .info-card, .term-card, .archive-card, .case-card {
+      background: #fcf8f1;
       border: 1px solid var(--line);
       border-radius: 20px;
       padding: 18px;
-      box-shadow: 0 12px 24px rgba(62, 36, 18, .06);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    .timeline-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 30px rgba(62, 36, 18, .1);
-      border-color: var(--accent);
+    .info-card strong, .term-card strong, .archive-card strong {
+      color: var(--ink);
     }
-    .case-id {
+    .reading-path {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .path-step {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .path-step .num {
       display: inline-block;
-      padding: 4px 10px;
+      min-width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
       border-radius: 999px;
       background: var(--accent-soft);
       color: var(--accent);
-      font-size: 12px;
+      font-weight: 700;
       margin-bottom: 10px;
     }
-    .meta, .involved { color: var(--muted); font-size: 14px; line-height: 1.6; }
-    .case-detail {
-      background: rgba(255,253,247,.96);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 16px 40px rgba(62, 36, 18, .08);
-      margin-bottom: 22px;
+    .mainline {
+      display: grid;
+      gap: 18px;
     }
-    .detail-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: flex-start;
-      margin-bottom: 18px;
+    .case-card {
+      border-left: 5px solid var(--accent);
     }
-    .back-link {
-      text-decoration: none;
+    .case-meta {
       color: var(--accent);
-      font-weight: 700;
-      white-space: nowrap;
+      font-size: 13px;
+      margin-bottom: 8px;
     }
-    .bottom { display: inline-block; margin-top: 10px; }
-    .detail-grid {
+    .summary-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 12px;
-      margin-bottom: 18px;
+      margin: 14px 0;
     }
-    .detail-grid div {
-      background: #fbf6ee;
+    .summary-grid div {
+      background: #fffdf8;
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 12px 14px;
     }
-    .detail-grid strong {
+    .summary-grid strong {
       display: block;
       font-size: 12px;
-      color: var(--muted);
+      color: var(--accent-2);
       margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: .04em;
     }
-    .note-block {
-      border-top: 1px dashed var(--line);
-      padding-top: 14px;
-      margin-top: 14px;
-    }
-    .note-block p { line-height: 1.8; color: #342b25; }
-    .message-list {
+    .quote-list {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 12px 0 0;
       display: grid;
       gap: 10px;
     }
-    .message-list li {
-      display: grid;
-      grid-template-columns: 170px 230px 1fr;
-      gap: 10px;
-      align-items: start;
-      padding: 10px 12px;
-      background: #fcf8f1;
-      border: 1px solid #eadbca;
+    .quote-list li {
+      border: 1px dashed var(--line);
       border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.6;
+      padding: 12px;
+      background: #fffdf8;
+      line-height: 1.7;
     }
-    .time, .speaker { color: var(--muted); }
+    .quote-time {
+      color: var(--accent);
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
     @media (max-width: 900px) {
-      .message-list li { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <section class="hero">
-      <h1>冲突案件时间线</h1>
-      <p class="sub">一级目录按时间线列出所有案件。点击任一案件即可跳转到详细案卷页；每个案件详情底部和顶部都提供“返回时间线”入口，方便来回切换浏览。</p>
+    <section class="panel">
+      <div class="eyebrow">Old Golden Dolphin</div>
+      <h1>旧金海豚案件时间线</h1>
+      <p class="sub">
+        这页不再把旧史记当成“聊天摘录仓库”，而是先告诉你该怎么看。旧时期的核心矛盾不是群规，也不是普通闲聊，而是裤、麻、程序-策划、Eggnisi 四个人围绕学历、项目责任、说教姿态、技术权威和叙事权展开的持续冲突。读这页时，先抓“谁跟谁打、为什么升级、围观者怎么定调、后果留下了什么标签”，不要先陷在原始聊天里。
+      </p>
+      <div class="nav">
+        <a href="index.html">返回首页</a>
+        <a href="period-analysis.html">查看分期总论</a>
+        <a href="character-biographies.html">先认四个人</a>
+      </div>
     </section>
 
-    <section id="timeline" class="timeline">
-      
-            <a class="timeline-card" href="#case-5">
-              <div class="case-id">案件 5</div>
-              <h3>组队试探与轻度拌嘴案</h3>
-              <p class="meta">2026-05-19 18:23:02 - 2026-05-19 19:11:38</p>
-              <p>组队、题材和个人定位的轻度拌嘴</p>
-              <p class="involved">麻(1075750195)、Eggnisi(3188064505)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-7">
-              <div class="case-id">案件 7</div>
-              <h3>学历与职业价值争议案</h3>
-              <p class="meta">2026-05-20 13:17:56 - 2026-05-20 13:42:14</p>
-              <p>学历、岗位与职业判断</p>
-              <p class="involved">裤(1106479930)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-15">
-              <div class="case-id">案件 15</div>
-              <h3>项目话语权争夺案</h3>
-              <p class="meta">2026-05-22 12:15:09 - 2026-05-22 17:46:34</p>
-              <p>项目想法、岗位分工与话语权竞争</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-19">
-              <div class="case-id">案件 19</div>
-              <h3>留学身份与公开辱骂升级案</h3>
-              <p class="meta">2026-05-24 20:37:42 - 2026-05-24 23:43:05</p>
-              <p>留学背景、资格感与公开辱骂</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-21">
-              <div class="case-id">案件 21</div>
-              <h3>群聊节奏与插话失控案</h3>
-              <p class="meta">2026-05-25 09:28:41 - 2026-05-25 11:01:21</p>
-              <p>群聊秩序、话题节奏与插话方式</p>
-              <p class="involved">裤(1106479930)、Eggnisi(3188064505)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-22">
-              <div class="case-id">案件 22</div>
-              <h3>技术路径互相看不上案</h3>
-              <p class="meta">2026-05-25 12:12:56 - 2026-05-25 13:39:27</p>
-              <p>项目观念与技术路径的互相看不上</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-23">
-              <div class="case-id">案件 23</div>
-              <h3>说话姿态与人设摩擦案</h3>
-              <p class="meta">2026-05-25 19:24:47 - 2026-05-25 20:20:22</p>
-              <p>表达姿态与个人形象的碰撞</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-24">
-              <div class="case-id">案件 24</div>
-              <h3>经验资历试探案</h3>
-              <p class="meta">2026-05-25 20:41:28 - 2026-05-25 21:16:10</p>
-              <p>经验、资历和圈内位置的试探</p>
-              <p class="involved">裤(1106479930)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-26">
-              <div class="case-id">案件 26</div>
-              <h3>轻松话题下的立场夹带案</h3>
-              <p class="meta">2026-05-26 10:12:30 - 2026-05-26 11:55:13</p>
-              <p>技术闲聊与夹带立场输出</p>
-              <p class="involved">Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-27">
-              <div class="case-id">案件 27</div>
-              <h3>学历真伪与求职能力对撞案</h3>
-              <p class="meta">2026-05-26 12:29:50 - 2026-05-26 14:35:33</p>
-              <p>学历真伪、求职结果、作品含金量与人格攻击</p>
-              <p class="involved">麻(1075750195)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-28">
-              <div class="case-id">案件 28</div>
-              <h3>大战后战况复盘案</h3>
-              <p class="meta">2026-05-26 15:07:12 - 2026-05-26 16:00:19</p>
-              <p>大战后的战况复盘与戏谑性站位</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-30">
-              <div class="case-id">案件 30</div>
-              <h3>抽象表达与项目幻想碰撞案</h3>
-              <p class="meta">2026-05-26 17:23:38 - 2026-05-26 19:20:34</p>
-              <p>项目幻想、抽象表达与群内互损</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-31">
-              <div class="case-id">案件 31</div>
-              <h3>外包与职业鄙视链争论案</h3>
-              <p class="meta">2026-05-26 20:03:12 - 2026-05-26 23:39:11</p>
-              <p>外包、语言能力与职业鄙视链</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-34">
-              <div class="case-id">案件 34</div>
-              <h3>对线正当性元辩论案</h3>
-              <p class="meta">2026-05-27 16:28:40 - 2026-05-27 16:55:29</p>
-              <p>对线是否正当以及为什么要对线</p>
-              <p class="involved">裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-36">
-              <div class="case-id">案件 36</div>
-              <h3>AI、工资与剥削理论争论案</h3>
-              <p class="meta">2026-05-27 19:13:30 - 2026-05-27 19:45:28</p>
-              <p>AI、剥削与社会分配的理论争论</p>
-              <p class="involved">裤(1106479930)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-37">
-              <div class="case-id">案件 37</div>
-              <h3>重构示范与技术表演案</h3>
-              <p class="meta">2026-05-27 20:16:54 - 2026-05-27 20:33:36</p>
-              <p>重构、技术判断与对外展示欲</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-38">
-              <div class="case-id">案件 38</div>
-              <h3>成圣学与造谣指控公开辩经案</h3>
-              <p class="meta">2026-05-27 20:54:01 - 2026-05-27 22:38:30</p>
-              <p>成圣学、造谣指控、技术笑柄与公开辩经</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-39">
-              <div class="case-id">案件 39</div>
-              <h3>夜间续战与辩经邀约案</h3>
-              <p class="meta">2026-05-27 23:07:18 - 2026-05-27 23:59:50</p>
-              <p>辩经邀请与争论的戏剧化延续</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-40">
-              <div class="case-id">案件 40</div>
-              <h3>项目理解与信任残留案</h3>
-              <p class="meta">2026-05-28 00:00:16 - 2026-05-28 00:21:12</p>
-              <p>项目理解、组织能力和表达信任</p>
-              <p class="involved">裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-43">
-              <div class="case-id">案件 43</div>
-              <h3>旧冲突余波再点燃案</h3>
-              <p class="meta">2026-05-28 17:47:09 - 2026-05-28 18:41:43</p>
-              <p>旧冲突余波与群内声望竞争</p>
-              <p class="involved">裤(1106479930)、Eggnisi(3188064505)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-44">
-              <div class="case-id">案件 44</div>
-              <h3>名声标签化传播案</h3>
-              <p class="meta">2026-05-28 23:07:30 - 2026-05-28 23:40:07</p>
-              <p>人设、名声与群体记忆的再生产</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-47">
-              <div class="case-id">案件 47</div>
-              <h3>禁言传闻与文本化攻击案</h3>
-              <p class="meta">2026-05-29 12:16:48 - 2026-05-29 12:36:02</p>
-              <p>禁言、传闻与群外文本化攻击</p>
-              <p class="involved">Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-55">
-              <div class="case-id">案件 55</div>
-              <h3>复活叙事与群体拱火回归案</h3>
-              <p class="meta">2026-05-30 18:57:44 - 2026-05-30 22:18:40</p>
-              <p>复活叙事、拉黑关系与群体拱火</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-56">
-              <div class="case-id">案件 56</div>
-              <h3>炸队责任与跑路指控案</h3>
-              <p class="meta">2026-05-30 22:38:46 - 2026-05-30 23:59:22</p>
-              <p>炸队责任、跑路指控、工作报告与舆论组织</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-57">
-              <div class="case-id">案件 57</div>
-              <h3>战后闲谈中的持续阴影案</h3>
-              <p class="meta">2026-05-31 00:00:01 - 2026-05-31 00:37:21</p>
-              <p>旧战后闲谈中的持续影子</p>
-              <p class="involved">裤(1106479930)、Eggnisi(3188064505)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-58">
-              <div class="case-id">案件 58</div>
-              <h3>岗位边界与指点式发言案</h3>
-              <p class="meta">2026-05-31 13:04:44 - 2026-05-31 13:36:19</p>
-              <p>岗位定义、专业边界与指点式发言</p>
-              <p class="involved">Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
-            <a class="timeline-card" href="#case-62">
-              <div class="case-id">案件 62</div>
-              <h3>全神队玩笑式临时缝合案</h3>
-              <p class="meta">2026-05-31 18:21:27 - 2026-05-31 19:28:26</p>
-              <p>以组队玩笑暂时缝合冲突关系</p>
-              <p class="involved">麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</p>
-            </a>
-            
+    <section class="panel">
+      <h2>一屏读懂</h2>
+      <div class="grid">
+        <article class="info-card">
+          <strong>旧时期主线</strong>
+          <p>从项目协作和职业判断的讨论，逐步升级为围绕学历、留学、作品、群外履历、炸队责任和“谁更像在装”的反复对撞。</p>
+        </article>
+        <article class="info-card">
+          <strong>真正的冲突主体</strong>
+          <p>核心不是“全群互撕”，而是四人矛盾簇。围观群众的主要作用是转述、拱火、补截图、把案件梗化。</p>
+        </article>
+        <article class="info-card">
+          <strong>最重要的阅读抓手</strong>
+          <p>优先看主线案 19、27、38、56。它们分别对应关系结构定型、人身化升级、风格对撞定型、责任案卷化。</p>
+        </article>
+        <article class="info-card">
+          <strong>读完要知道什么</strong>
+          <p>谁在主攻、谁在防守、谁在转述战况，以及每一案给后面的冲突固定了什么新标签。</p>
+        </article>
+      </div>
     </section>
 
-    
-            <section class="case-detail" id="case-5">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 5</div>
-                  <h2>组队试探与轻度拌嘴案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-19 18:23:02 - 2026-05-19 19:11:38</span></div>
-                <div><strong>冲突等级</strong><span>低</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、Eggnisi(3188064505)</span></div>
-                <div><strong>消息数</strong><span>40</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>组队、题材和个人定位的轻度拌嘴</p></div>
-              <div class="note-block"><h3>起因</h3><p>围绕组队方式、比赛题材和个人能力边界展开讨论，气氛偏调侃。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>参与者主要在讨论怎么组队、怎么扣题、个人是否能扛住需求，冲突尚未升级到明确对骂。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者更多在接话、补充经验和玩梗，整体以群聊热闹为主。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>事件没有形成固定敌对关系，但为后续更激烈的对线提供了熟人化语境。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-19 18:23:02</span><span class='speaker'>资深喆羊20年(1269023273)</span><span class='content'>水泥麻辣烫，有感觉吗</span></li><li><span class='time'>2026-05-19 18:23:28</span><span class='speaker'>资深喆羊20年(1269023273)</span><span class='content'>其实是芝麻酱</span></li><li><span class='time'>2026-05-19 18:23:59</span><span class='speaker'>千奇怪尔(3309270191)</span><span class='content'>[回复 u_3fo5PDjhb8_JEcrxDcaitA: [图片]要怎么组队啊] @麻辣小叶娘 就自己找队友啊</span></li><li><span class='time'>2026-05-19 18:33:44</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[微笑]</span></li><li><span class='time'>2026-05-19 18:35:08</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>找到了喵</span></li><li><span class='time'>2026-05-19 18:35:44</span><span class='speaker'>UE特效-魇月(2135686658)</span><span class='content'>大厂已经挂麻了</span></li><li><span class='time'>2026-05-19 18:35:48</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>大厂比中厂好进</span></li><li><span class='time'>2026-05-19 18:36:07</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>私发我简历</span></li><li><span class='time'>2026-05-19 18:36:17</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>学校不好</span></li><li><span class='time'>2026-05-19 18:36:38</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>技能太浅</span></li><li><span class='time'>2026-05-19 18:37:02</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>检测全是直掉api</span></li><li><span class='time'>2026-05-19 18:37:10</span><span class='speaker'>群广井菊里，时不时来群里发酒疯(1194118346)</span><span class='content'>[回复 u_GBMGi3VAIHbyu_ii1X8H8Q: 检测全是直掉api] @Eggnisi egg看看我的</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-7">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 7</div>
-                  <h2>学历与职业价值争议案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-20 13:17:56 - 2026-05-20 13:42:14</span></div>
-                <div><strong>冲突等级</strong><span>低</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>33</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>学历、岗位与职业判断</p></div>
-              <div class="note-block"><h3>起因</h3><p>裤从学历是否只对第一份工作有用切入，引发对职业路径、岗位价值的不同判断。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>裤偏向提问和自我试探，程序-策划和其他群友则用经验性判断回应。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者更多是接段子和补经验，没有形成明确站队。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>争论暂时停在观点层面，但‘职业资格谁更有发言权’这一线索被保留下来。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-20 13:17:56</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 912D8CACCDBE89F3CBB758A72931FFB8.jpg] [image: 912D8CACCDBE89F3CBB758A72931FFB8.jpg]</span></li><li><span class='time'>2026-05-20 13:18:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>学历这东西 不是只有第一次找工作有用吗</span></li><li><span class='time'>2026-05-20 13:18:10</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 912D8CACCDBE89F3CBB758A72931FFB8.jpg] [image: 912D8CACCDBE89F3CBB758A72931FFB8.jpg]</span></li><li><span class='time'>2026-05-20 13:18:39</span><span class='speaker'>夜火[FORALAND]孤星(577211481)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 学历这东西 不是只有第一次找工作有用吗] @裤 和同事吹牛的时候装逼有用</span></li><li><span class='time'>2026-05-20 13:19:24</span><span class='speaker'>裤(1106479930)</span><span class='content'>原画就是概念设计吧</span></li><li><span class='time'>2026-05-20 13:19:29</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: E8F39066C5D38C982898D01FFDB14D03.jpg] [image: E8F39066C5D38C982898D01FFDB14D03.jpg]</span></li><li><span class='time'>2026-05-20 13:19:45</span><span class='speaker'>Inori(1144511082)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 学历这东西 不是只有第一次找工作有用吗] @裤 实则找工作一直都有用</span></li><li><span class='time'>2026-05-20 13:19:46</span><span class='speaker'>裤(1106479930)</span><span class='content'>反正我画的那会他们是那么说的</span></li><li><span class='time'>2026-05-20 13:19:55</span><span class='speaker'>裤(1106479930)</span><span class='content'>角色概念设计 场景概念设计</span></li><li><span class='time'>2026-05-20 13:19:59</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: E8F39066C5D38C982898D01FFDB14D03.jpg] [image: E8F39066C5D38C982898D01FFDB14D03.jpg]</span></li><li><span class='time'>2026-05-20 13:20:42</span><span class='speaker'>于一(2959453961)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 角色概念设计 场景概念设计] @裤 也有这种说法，反正这个玩意也没个定型</span></li><li><span class='time'>2026-05-20 13:20:44</span><span class='speaker'>裤(1106479930)</span><span class='content'>不啊 都是概念设计</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-15">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 15</div>
-                  <h2>项目话语权争夺案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-22 12:15:09 - 2026-05-22 17:46:34</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>575</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>项目想法、岗位分工与话语权竞争</p></div>
-              <div class="note-block"><h3>起因</h3><p>多人围绕项目方向、岗位组合和个人目标展开密集发言，开始出现彼此评价。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>参与者一边谈需求一边试图确立自己在讨论中的位置，争论更多是抢话语权。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者会顺手接梗或抬杠，使讨论在合作与竞争之间来回摆动。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>没有结论，但氛围从普通交流转向更容易被激化的半竞争状态。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-22 12:15:09</span><span class='speaker'>游小白(474165841)</span><span class='content'>[回复 u_3fo5PDjhb8_JEcrxDcaitA: 嚯嚯完就继续回去上班了] 晕，做游戏是赚钱的，至少不会比上班差。@麻辣小叶娘</span></li><li><span class='time'>2026-05-22 12:15:17</span><span class='speaker'>恭喜发财(2214772581)</span><span class='content'>[回复 u_HQCwLJiaD_u2S0T2Vy_SGQ: 晕，做游戏是赚钱的，至少不会比上班差。@麻辣小叶娘] ？</span></li><li><span class='time'>2026-05-22 12:34:41</span><span class='speaker'>游小白(474165841)</span><span class='content'>[回复 u_3fo5PDjhb8_JEcrxDcaitA: 哪种，xcom还是火纹还是皇家骑士团那种23333] @麻辣小叶娘 更小一些，陷阵之至这种</span></li><li><span class='time'>2026-05-22 12:42:15</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>建议萌新做独游</span></li><li><span class='time'>2026-05-22 12:42:32</span><span class='speaker'>游亚(2687396982)</span><span class='content'>[回复 u_fo_VHAYVY4psyQA35Exn2w: 建议萌新做独游] @程序-策划 ？</span></li><li><span class='time'>2026-05-22 12:42:58</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_3fo5PDjhb8_JEcrxDcaitA: [图片]策划日常会出现越萌新越喜欢开大坑的情况（）] @麻辣小叶娘 21天怎么开</span></li><li><span class='time'>2026-05-22 12:43:50</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@游亚 人家萌新不做独游，怎么能积攒经验呢？</span></li><li><span class='time'>2026-05-22 12:46:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>我也以为gj属于独游诶</span></li><li><span class='time'>2026-05-22 12:46:11</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 912D8CACCDBE89F3CBB758A72931FFB8.jpg] [image: 912D8CACCDBE89F3CBB758A72931FFB8.jpg]</span></li><li><span class='time'>2026-05-22 12:46:57</span><span class='speaker'>裤(1106479930)</span><span class='content'>玩法demo不是阶段吗 那不是另一个维度的吗</span></li><li><span class='time'>2026-05-22 12:46:59</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 912D8CACCDBE89F3CBB758A72931FFB8.jpg] [image: 912D8CACCDBE89F3CBB758A72931FFB8.jpg]</span></li><li><span class='time'>2026-05-22 12:47:51</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>独立游戏现在的界限是越来越模糊了</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-19">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 19</div>
-                  <h2>留学身份与公开辱骂升级案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-24 20:37:42 - 2026-05-24 23:43:05</span></div>
-                <div><strong>冲突等级</strong><span>高</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>536</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>留学背景、资格感与公开辱骂</p></div>
-              <div class="note-block"><h3>起因</h3><p>原本从技术、美术分工和项目参与方式谈起，随后被长篇说教和身份评价引爆。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>麻认为有人站在高位说教、借身份或经验压人，于是用激烈辱骂正面回击；裤在前段不断追问美术协作、AI 写代码、项目分工；Eggnisi 与程序-策划在后段加入，把讨论继续推向立场和人格判断。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群友既有劝阻，也有围观、转述、补刀和继续递话的人。‘你从前面开始看’‘还有下集’这类反应说明围观已经成为事件的一部分。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>争论没有即时收束，而是把‘留学生身份’‘说教式表达’‘是否高高在上’这些标签固定下来，成为后续多次复燃的源头。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-24 20:37:42</span><span class='speaker'>麻(1075750195)</span><span class='content'>godot的shader好像不太能做这种</span></li><li><span class='time'>2026-05-24 20:37:46</span><span class='speaker'>麻(1075750195)</span><span class='content'>还有雾神</span></li><li><span class='time'>2026-05-24 20:38:13</span><span class='speaker'>雾理莎(1395171137)</span><span class='content'>麻又在串，再串我要发你语录了</span></li><li><span class='time'>2026-05-24 20:43:43</span><span class='speaker'>裤(1106479930)</span><span class='content'>不错，美术同行们啥时候发点作品</span></li><li><span class='time'>2026-05-24 20:43:45</span><span class='speaker'>裤(1106479930)</span><span class='content'>想看</span></li><li><span class='time'>2026-05-24 20:51:40</span><span class='speaker'>裤(1106479930)</span><span class='content'>泪目</span></li><li><span class='time'>2026-05-24 20:51:54</span><span class='speaker'>裤(1106479930)</span><span class='content'>为什么一个美术不能参与多个项目呢</span></li><li><span class='time'>2026-05-24 20:53:43</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {E8F39066-C5D3-8C98-2898-D01FFDB14D03}.gif]只想当个不需要进引擎，只要完成需求就行的美术 [image: {E8F39066-C5D3-8C98-2898-D01FFDB14D03}.gif]</span></li><li><span class='time'>2026-05-24 20:54:09</span><span class='speaker'>麻(1075750195)</span><span class='content'>ai程序这块</span></li><li><span class='time'>2026-05-24 20:54:38</span><span class='speaker'>裤(1106479930)</span><span class='content'>美术也比我想得多好多</span></li><li><span class='time'>2026-05-24 20:55:26</span><span class='speaker'>Maxy(3478124403)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: [图片]只想当个不需要进引擎，只要完成需求就行的美术] @裤 那沟通成本会很高的</span></li><li><span class='time'>2026-05-24 20:56:00</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_EJumRVqbQm0fOZW4EMHgfw: @裤 那沟通成本会很高的] @Maxy 泪目</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-21">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 21</div>
-                  <h2>群聊节奏与插话失控案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-25 09:28:41 - 2026-05-25 11:01:21</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、Eggnisi(3188064505)</span></div>
-                <div><strong>消息数</strong><span>139</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>群聊秩序、话题节奏与插话方式</p></div>
-              <div class="note-block"><h3>起因</h3><p>多人同时插入不同话题，开始出现对谁在带节奏、谁在搅局的不满。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>当事人并非只争事实，而是在争谁有资格定义当前话题。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者大多以吐槽、接梗和追问前情的方式参与。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>留下了‘这个群容易被带节奏’的印象。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-25 09:28:41</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>入啥门</span></li><li><span class='time'>2026-05-25 09:28:54</span><span class='speaker'>裤(1106479930)</span><span class='content'>这么学术</span></li><li><span class='time'>2026-05-25 09:29:01</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 39A7571022BCF4B19C0FD2662620C93D.jpg] [image: 39A7571022BCF4B19C0FD2662620C93D.jpg]</span></li><li><span class='time'>2026-05-25 09:29:36</span><span class='speaker'>裤(1106479930)</span><span class='content'>概念图先行的项目很多</span></li><li><span class='time'>2026-05-25 09:29:49</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_H2p6hp--YYvKg5brQhsRWQ: 原消息] 怎么是武汉大学啊</span></li><li><span class='time'>2026-05-25 09:29:52</span><span class='speaker'>裤(1106479930)</span><span class='content'>白夜极光</span></li><li><span class='time'>2026-05-25 09:29:53</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-25 09:30:22</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我是没关系的，但我很多朋友不喜欢武汉大学</span></li><li><span class='time'>2026-05-25 09:30:23</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 01F739594F64113621C5D49C2781219E.jpg] [image: 01F739594F64113621C5D49C2781219E.jpg]</span></li><li><span class='time'>2026-05-25 09:30:24</span><span class='speaker'>美术🥺-壶见大学生(2689044001)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 原消息] @裤 只记得立绘超大杯</span></li><li><span class='time'>2026-05-25 09:30:41</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_34wd0DSfw553l8oppGkN9Q: 原消息] 被玩法拖累了</span></li><li><span class='time'>2026-05-25 09:30:56</span><span class='speaker'>裤(1106479930)</span><span class='content'>反正二游立绘最顶级的那帮人了</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-22">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 22</div>
-                  <h2>技术路径互相看不上案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-25 12:12:56 - 2026-05-25 13:39:27</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>58</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>项目观念与技术路径的互相看不上</p></div>
-              <div class="note-block"><h3>起因</h3><p>讨论进入更具体的工作流和项目路线后，开始出现轻度否定和讽刺。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>有人强调可执行性，有人强调理念或方向，争论点从做法延伸到能力判断。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群友会顺势把技术争论娱乐化，降低正式讨论氛围。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>没有定论，但加深了彼此的预设成见。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-25 12:12:56</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_z1pkAsW9XvQozeu408NMFg: [图片]] @穆图 策划 上个厕所起来还在拉人，要成一个公司了老师！</span></li><li><span class='time'>2026-05-25 12:12:57</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: 912D8CACCDBE89F3CBB758A72931FFB8.jpg] [image: 912D8CACCDBE89F3CBB758A72931FFB8.jpg]</span></li><li><span class='time'>2026-05-25 12:13:05</span><span class='speaker'>PM 策划 宣发 南竹(2656980584)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: @穆图 策划 上个厕所起来还在拉人，要成一个公司了老师！] @裤 我去还真是</span></li><li><span class='time'>2026-05-25 12:15:18</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_-oB3T1tXOn4KtXF0FGjrZw: 结果他阿巴阿巴说道了半天] @曦曦不嘻嘻</span></li><li><span class='time'>2026-05-25 12:15:24</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>说实话</span></li><li><span class='time'>2026-05-25 12:15:34</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>有人喜欢挺好的</span></li><li><span class='time'>2026-05-25 12:15:45</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>但是拿出来当乐子消费</span></li><li><span class='time'>2026-05-25 12:15:53</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 01F739594F64113621C5D49C2781219E.jpg] [image: 01F739594F64113621C5D49C2781219E.jpg]</span></li><li><span class='time'>2026-05-25 12:15:55</span><span class='speaker'>群广井菊里，时不时来群里发酒疯(1194118346)</span><span class='content'>[回复 u_GBMGi3VAIHbyu_ii1X8H8Q: 有人喜欢挺好的] @Eggnisi 世界上多一个人喜欢你总比多一个人讨厌你要好</span></li><li><span class='time'>2026-05-25 12:16:13</span><span class='speaker'>资深喆羊20年(1269023273)</span><span class='content'>[回复 u_gvvLLoUwJ_VVEmOyO-bERQ: @Eggnisi 世界上多一个人喜欢你总比多一个人讨厌你要好] @扑棱蛾子 我想和你睡觉</span></li><li><span class='time'>2026-05-25 12:16:48</span><span class='speaker'>PM 策划 宣发 南竹(2656980584)</span><span class='content'>[回复 u_gvvLLoUwJ_VVEmOyO-bERQ: @Eggnisi 世界上多一个人喜欢你总比多一个人讨厌你要好] @扑棱蛾子 兑</span></li><li><span class='time'>2026-05-25 12:17:05</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>写小作文没啥吧</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-23">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 23</div>
-                  <h2>说话姿态与人设摩擦案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-25 19:24:47 - 2026-05-25 20:20:22</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>35</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>表达姿态与个人形象的碰撞</p></div>
-              <div class="note-block"><h3>起因</h3><p>讨论里逐渐出现对说话方式、装腔作势和自我包装的评价。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>表面像是玩笑，实际上已经进入对人格和风格的否定。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者大多把它当‘节目’继续推进。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>事件进入可随时升级的状态。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-25 19:24:47</span><span class='speaker'>裤(1106479930)</span><span class='content'>中介(不是</span></li><li><span class='time'>2026-05-25 19:26:10</span><span class='speaker'>穆图 策划(1731642890)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 中介(不是] 唉，裤哥组好队了就是chill啊</span></li><li><span class='time'>2026-05-25 19:28:11</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_z1pkAsW9XvQozeu408NMFg: 唉，裤哥组好队了就是chill啊] 是本身就是朋友拉的</span></li><li><span class='time'>2026-05-25 19:28:28</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_4-nrGElrNQfufJkoX_DQKg: 这缺的是主策还是缺其他职能的策划啊。] @魔蘑菇骨子 分这么细吗</span></li><li><span class='time'>2026-05-25 19:30:38</span><span class='speaker'>裤(1106479930)</span><span class='content'>类目，纯为爱发电啊</span></li><li><span class='time'>2026-05-25 19:31:39</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_anK8Qc0noiQe6a9IIDpWUg: 有饭吗] @资深喆羊20年 在炫了</span></li><li><span class='time'>2026-05-25 19:32:07</span><span class='speaker'>穆图 策划(1731642890)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 类目，纯为爱发电啊] 哼，哪天就把裤哥打包出售了</span></li><li><span class='time'>2026-05-25 19:32:46</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_z1pkAsW9XvQozeu408NMFg: 哼，哪天就把裤哥打包出售了] 感觉说不定真有说法</span></li><li><span class='time'>2026-05-25 19:32:54</span><span class='speaker'>裤(1106479930)</span><span class='content'>大部分大公司都有猎头</span></li><li><span class='time'>2026-05-25 19:33:01</span><span class='speaker'>裤(1106479930)</span><span class='content'>独游好像没怎么听说</span></li><li><span class='time'>2026-05-25 19:35:15</span><span class='speaker'>裤(1106479930)</span><span class='content'>好奇主办方如何盈利</span></li><li><span class='time'>2026-05-25 19:35:31</span><span class='speaker'>裤(1106479930)</span><span class='content'>？</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-24">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 24</div>
-                  <h2>经验资历试探案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-25 20:41:28 - 2026-05-25 21:16:10</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>25</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>经验、资历和圈内位置的试探</p></div>
-              <div class="note-block"><h3>起因</h3><p>多方围绕经验与履历展开相互试探和对比。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>谁更懂、谁更有资格评价项目和行业，是这段争论的核心。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众反应以围观和求解释为主。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>进一步为后续身份冲突铺路。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-25 20:41:28</span><span class='speaker'>裤(1106479930)</span><span class='content'>黄油玩法</span></li><li><span class='time'>2026-05-25 20:43:56</span><span class='speaker'>裤(1106479930)</span><span class='content'>类目</span></li><li><span class='time'>2026-05-25 20:44:35</span><span class='speaker'>裤(1106479930)</span><span class='content'>粉丝钱这么好恰？</span></li><li><span class='time'>2026-05-25 20:45:40</span><span class='speaker'>恭喜发财(2214772581)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 粉丝钱这么好恰？] @裤 是这样的</span></li><li><span class='time'>2026-05-25 20:49:21</span><span class='speaker'>裤(1106479930)</span><span class='content'>hhhh</span></li><li><span class='time'>2026-05-25 20:49:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>？</span></li><li><span class='time'>2026-05-25 20:49:35</span><span class='speaker'>裤(1106479930)</span><span class='content'>歪日</span></li><li><span class='time'>2026-05-25 20:49:37</span><span class='speaker'>裤(1106479930)</span><span class='content'>xp洞察</span></li><li><span class='time'>2026-05-25 20:51:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>原来是反例吗</span></li><li><span class='time'>2026-05-25 20:51:14</span><span class='speaker'>裤(1106479930)</span><span class='content'>我还以为是正</span></li><li><span class='time'>2026-05-25 20:52:04</span><span class='speaker'>裤(1106479930)</span><span class='content'>hhh是的 但我以为是我心急</span></li><li><span class='time'>2026-05-25 20:53:20</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_8OW2hyEH4khoBpRLC9OvTg: 原消息] @雾海[gamejam水群模拟器]求加愿望单 上线了？</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-26">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 26</div>
-                  <h2>轻松话题下的立场夹带案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-26 10:12:30 - 2026-05-26 11:55:13</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>145</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>技术闲聊与夹带立场输出</p></div>
-              <div class="note-block"><h3>起因</h3><p>原本是轻松话题，但程序-策划和 Eggnisi 等人的出场让讨论开始带出个人姿态。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>一方偏长段输出，另一方更擅长调侃与拆梗。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群友的参与方式是接梗和旁观，不直接裁判对错。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>关系层面的张力继续累积。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-26 10:12:30</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>布丁？</span></li><li><span class='time'>2026-05-26 10:12:41</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@曦曦不嘻嘻 我记得有款果冻就叫布丁</span></li><li><span class='time'>2026-05-26 10:14:15</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>对，我小时候就吃过</span></li><li><span class='time'>2026-05-26 10:14:20</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>这个品牌很老了</span></li><li><span class='time'>2026-05-26 10:18:30</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@曦曦不嘻嘻 有一个品种叫牛奶布丁的果冻</span></li><li><span class='time'>2026-05-26 10:18:37</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>特别好吃！</span></li><li><span class='time'>2026-05-26 10:18:48</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>目前我只在大超市看到过，其他的一些小超市没看到</span></li><li><span class='time'>2026-05-26 10:18:52</span><span class='speaker'>曦曦不嘻嘻(3890863831)</span><span class='content'>[回复 u_fo_VHAYVY4psyQA35Exn2w: 特别好吃！] @程序-策划 那我高低要去尝尝😋</span></li><li><span class='time'>2026-05-26 10:20:43</span><span class='speaker'>曦曦不嘻嘻(3890863831)</span><span class='content'>[回复 u_-oB3T1tXOn4KtXF0FGjrZw: [图片]] @程序-策划 是这个吗</span></li><li><span class='time'>2026-05-26 10:21:22</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>不是</span></li><li><span class='time'>2026-05-26 10:21:29</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>那东西是果冻</span></li><li><span class='time'>2026-05-26 10:28:48</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@曦曦不嘻嘻 我找找看！毕竟目前这个果冻也只有大超市有的卖</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-27">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 27</div>
-                  <h2>学历真伪与求职能力对撞案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-26 12:29:50 - 2026-05-26 14:35:33</span></div>
-                <div><strong>冲突等级</strong><span>极高</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>374</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>学历真伪、求职结果、作品含金量与人格攻击</p></div>
-              <div class="note-block"><h3>起因</h3><p>麻直接点名 Eggnisi，质疑其学校与学历叙事，并引入别群经历和退群行为。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>麻主张对方靠学历包装、被戳破后急于防御，还追问其项目和作品含金量；Eggnisi 则反击麻‘高学历海归却春招没人要’，并用截图、反问和轻蔑语气把焦点转到对方求职与能力上。双方都不再只谈事实，而是在用履历、学校、厂商和作品给彼此定级。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众的反应包括继续艾特、围观、传话、补截图、讨论谁把谁拉黑，以及把事件当成‘刚打完一架’的公共节目回顾。裤此时起到战况播报和转述作用，进一步扩散了事件影响。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这是最典型的身份冲突案例之一。之后群里提到 Eggnisi、麻、学历、留学、群外装逼等话题时，都会回响到这一轮对线。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-26 12:29:50</span><span class='speaker'>麻(1075750195)</span><span class='content'>是温州一中现在就读于浙江大学的椰奶同学吗？@Eggnisi</span></li><li><span class='time'>2026-05-26 12:30:45</span><span class='speaker'>麻(1075750195)</span><span class='content'>在隔壁装完逼 伪装完学历就退群 看乐了</span></li><li><span class='time'>2026-05-26 12:30:59</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>温州一中</span></li><li><span class='time'>2026-05-26 12:31:03</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-26 12:31:28</span><span class='speaker'>麻(1075750195)</span><span class='content'>好了 懒得继续攻击你了</span></li><li><span class='time'>2026-05-26 12:31:35</span><span class='speaker'>麻(1075750195)</span><span class='content'>祝你成功 幸福快乐</span></li><li><span class='time'>2026-05-26 12:31:38</span><span class='speaker'>麻(1075750195)</span><span class='content'>加油</span></li><li><span class='time'>2026-05-26 12:31:42</span><span class='speaker'>麻(1075750195)</span><span class='content'>[图片: 0819AC14FD84DDFAD6B4FDFA8265097C.png] [image: 0819AC14FD84DDFAD6B4FDFA8265097C.png]</span></li><li><span class='time'>2026-05-26 12:32:11</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-26 12:33:53</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>您这辈子也就这样了，随便听个群友瞎说就开始转，你猜我到底是哪个学校的@麻</span></li><li><span class='time'>2026-05-26 12:34:04</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>这么厉害怎么没有厂子要呢</span></li><li><span class='time'>2026-05-26 12:34:07</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: D702A02672E4FD30F1AE0F7712173ED1.jpg] [image: D702A02672E4FD30F1AE0F7712173ED1.jpg]</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-28">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 28</div>
-                  <h2>大战后战况复盘案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-26 15:07:12 - 2026-05-26 16:00:19</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)</span></div>
-                <div><strong>消息数</strong><span>51</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>大战后的战况复盘与戏谑性站位</p></div>
-              <div class="note-block"><h3>起因</h3><p>裤主动提起‘刚刚蛋哥和麻哥打起来了不是’，把上一场对线转成公共谈资。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>麻否认这是‘打起来’，Eggnisi 则保持对抗姿态但转入半玩笑模式，裤继续扮演拱火和战况播报者。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>其他群友顺着称呼、身份、画画资格等梗继续接话。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>虽非新冲突起点，但把上一轮高烈度争吵转写成了群体记忆。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-26 15:07:12</span><span class='speaker'>裤(1106479930)</span><span class='content'>刚刚蛋哥和麻哥打起来了不是？</span></li><li><span class='time'>2026-05-26 15:07:19</span><span class='speaker'>裤(1106479930)</span><span class='content'>可惜我睡着了</span></li><li><span class='time'>2026-05-26 15:07:26</span><span class='speaker'>麻(1075750195)</span><span class='content'>并非打起来</span></li><li><span class='time'>2026-05-26 15:07:26</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>别叫🥚哥</span></li><li><span class='time'>2026-05-26 15:07:29</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-26 15:07:50</span><span class='speaker'>裤(1106479930)</span><span class='content'>蛋哥 什么时候恢复我画画籍啊蛋哥</span></li><li><span class='time'>2026-05-26 15:08:03</span><span class='speaker'>裤(1106479930)</span><span class='content'>我不敢画画了😭</span></li><li><span class='time'>2026-05-26 15:08:14</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>不用画画了</span></li><li><span class='time'>2026-05-26 15:08:23</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我不批准</span></li><li><span class='time'>2026-05-26 15:08:49</span><span class='speaker'>Vueko(2497658522)</span><span class='content'>@裤 那你这辈子都别画画了</span></li><li><span class='time'>2026-05-26 15:08:54</span><span class='speaker'>裤(1106479930)</span><span class='content'>😭</span></li><li><span class='time'>2026-05-26 15:09:13</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_gITaM3i6Jrm0aWo_jHMqVg: @裤 那你这辈子都别画画了] 对不起vkr大人</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-30">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 30</div>
-                  <h2>抽象表达与项目幻想碰撞案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-26 17:23:38 - 2026-05-26 19:20:34</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>121</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>项目幻想、抽象表达与群内互损</p></div>
-              <div class="note-block"><h3>起因</h3><p>裤谈 AR/真人 CS 设想，程序-策划插入诗歌和抽象化表达，氛围转向彼此调侃。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>争论重点不在事实，而是谁的表达更像‘整活’、谁更有资格把话题往自己擅长的方向带。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众主要以玩笑、比喻和价格梗跟进。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>事件强度不高，但强化了程序-策划与群体之间的‘抽象表达者’形象。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-26 17:23:38</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {39A75710-22BC-F4B1-9C0F-D2662620C93D}.gif] [image: {39A75710-22BC-F4B1-9C0F-D2662620C93D}.gif]</span></li><li><span class='time'>2026-05-26 17:24:34</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_8-N4tQrt3wkJw6Oy_r4rAg: [汪汪]说点拓展的，假设你有一个鬼屋或密室逃脱，但是进这个鬼屋玩需要带ar眼睛，那是不是很屌了？但是这个方案也会导致设备容易损坏] 我只想让真人cs没那么多橡皮人再玩</span></li><li><span class='time'>2026-05-26 17:24:53</span><span class='speaker'>裤(1106479930)</span><span class='content'>我是期待真人cs和ar的结合</span></li><li><span class='time'>2026-05-26 17:25:02</span><span class='speaker'>裤(1106479930)</span><span class='content'>不知道有没有</span></li><li><span class='time'>2026-05-26 17:25:10</span><span class='speaker'>Essnoenn(2239083302)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 我是期待真人cs和ar的结合] @裤 有vr的</span></li><li><span class='time'>2026-05-26 17:25:53</span><span class='speaker'>溯江流(791926755)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 我是期待真人cs和ar的结合] @裤 这个是真可以我感觉</span></li><li><span class='time'>2026-05-26 17:26:01</span><span class='speaker'>裤(1106479930)</span><span class='content'>感觉以后游戏会很多很多，平台和发行的地位又重新回来了</span></li><li><span class='time'>2026-05-26 17:29:07</span><span class='speaker'>裤(1106479930)</span><span class='content'>说的是假如吧</span></li><li><span class='time'>2026-05-26 17:39:31</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>《问道行》（修订建议稿） 乾坤问道本逆旅，灵晶百斛窥天秘。 采得玄黄筑道基，踏破星域探幽微。 忽见邪修阻前路，剑阵如龙斩魍魉。 若有神通难伏魔，九霄雷动淬丹曦。 共参大道真道友，百劫千难证玄功。 天魔惑心乱道境，明镜悬台照妄凶。 劫波渡尽星河净，玉宇澄清现太冲。 敢问长生何所倚？玄门正气贯鸿蒙！</span></li><li><span class='time'>2026-05-26 17:42:23</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>我手写的</span></li><li><span class='time'>2026-05-26 17:43:18</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>这首诗是我所创</span></li><li><span class='time'>2026-05-26 17:53:31</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@溯江流 你那写的啥玩意？</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-31">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 31</div>
-                  <h2>外包与职业鄙视链争论案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-26 20:03:12 - 2026-05-26 23:39:11</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>211</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>外包、语言能力与职业鄙视链</p></div>
-              <div class="note-block"><h3>起因</h3><p>从粤语、外语加分谈起，转入对外包、研发、美术中心和行业地位的评价。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>裤更多从见闻出发质疑和试探；程序-策划直接给外包下结论，形成鲜明价值判断。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者会补公司信息或接下黑奴、血汗工厂之类的评价。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>没有形成个人对骂，但明显带出职业鄙视链与路径焦虑。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-26 20:03:12</span><span class='speaker'>裤(1106479930)</span><span class='content'>粤语算方言而已吧</span></li><li><span class='time'>2026-05-26 20:03:22</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg] [image: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg]</span></li><li><span class='time'>2026-05-26 20:03:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>那我也会两门语言</span></li><li><span class='time'>2026-05-26 20:04:10</span><span class='speaker'>裤(1106479930)</span><span class='content'>我已经一秒没有听某个语言差一票变成全国语言的梗了</span></li><li><span class='time'>2026-05-26 20:04:23</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg] [image: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg]</span></li><li><span class='time'>2026-05-26 20:13:39</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg] [image: {72A9DA2A-5F24-FE93-64EF-EAB7D075B477}.jpg]</span></li><li><span class='time'>2026-05-26 20:17:18</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_5QLLKjPkdm7FXcvDAkpJpA: 之前看有人求职简历上写会英语和广东话] @Patricky 求职还要语言的吗 ，投的外厂？</span></li><li><span class='time'>2026-05-26 20:19:02</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {E10F6CAB-0430-66C5-E6E4-AAA048043812}.jpg]我所能了解到的，外语加分的公司好像就只有酷拳了 [image: {E10F6CAB-0430-66C5-E6E4-AAA048043812}.jpg]</span></li><li><span class='time'>2026-05-26 20:37:43</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>[表情14]</span></li><li><span class='time'>2026-05-26 20:38:07</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_MYTcUa11D-fWjJdtXRZlOQ: Gameloft外语也是加分的] 我还以为在国内没有厂‘</span></li><li><span class='time'>2026-05-26 20:38:23</span><span class='speaker'>裤(1106479930)</span><span class='content'>维塔士是外包吧</span></li><li><span class='time'>2026-05-26 20:38:38</span><span class='speaker'>裤(1106479930)</span><span class='content'>程序不知道，外包厂美术就是纯黑奴了</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-34">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 34</div>
-                  <h2>对线正当性元辩论案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-27 16:28:40 - 2026-05-27 16:55:29</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>35</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>对线是否正当以及为什么要对线</p></div>
-              <div class="note-block"><h3>起因</h3><p>Eggnisi 公开谈自己喜欢对线，并把对线解释为一种面向围观者的展示行为。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>Eggnisi 认为关键不是说服对手，而是让围观者觉得自己对；裤则把对线比作心理咨询，试图用调侃化解释其功能。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者在这种元讨论里实际上被当成评委和观众，群体存在本身变成了争论的一部分。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这段非常像 Eggnisi 自己对其争论策略的公开说明，也帮助理解后续很多事件的打法。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-27 16:28:40</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[微笑]</span></li><li><span class='time'>2026-05-27 16:29:07</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>小学就玩女号么</span></li><li><span class='time'>2026-05-27 16:29:14</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我小学都是玩小学的</span></li><li><span class='time'>2026-05-27 16:39:08</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_cc9R7B2XNSc9bzP0cut5Kw: @梦醒时分 没啥必要] @Inori 我要</span></li><li><span class='time'>2026-05-27 16:39:19</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>谁说没啥必要的</span></li><li><span class='time'>2026-05-27 16:39:23</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我要</span></li><li><span class='time'>2026-05-27 16:39:29</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-27 16:40:14</span><span class='speaker'>裤(1106479930)</span><span class='content'>对线怕不是也是种心理咨询</span></li><li><span class='time'>2026-05-27 16:41:36</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: D702A02672E4FD30F1AE0F7712173ED1.jpg] [image: D702A02672E4FD30F1AE0F7712173ED1.jpg]</span></li><li><span class='time'>2026-05-27 16:41:53</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>哎哟</span></li><li><span class='time'>2026-05-27 16:42:07</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>找人打游戏</span></li><li><span class='time'>2026-05-27 16:42:11</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>有没有要来爬塔的</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-36">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 36</div>
-                  <h2>AI、工资与剥削理论争论案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-27 19:13:30 - 2026-05-27 19:45:28</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>22</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>AI、剥削与社会分配的理论争论</p></div>
-              <div class="note-block"><h3>起因</h3><p>程序-策划从 AI 会不会取代劳动、工资从哪里来切入，争论升级为社会理论讨论。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>程序-策划偏宏大叙事，连续发问并抛出剥削、奴隶、牛马等概念；裤则用更具体、更概念化但偏教材式的经济术语回应。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>Inori 等人会穿插一句式回应，既接住问题，也让争论继续悬而不决。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>事件没有情绪爆炸，但把两人的认知风格差异暴露得很充分。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-27 19:13:30</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>苦也，都玩原神</span></li><li><span class='time'>2026-05-27 19:19:32</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>[图片: DADAEB77370044A8BC98DA1A842D044F.jpg] [image: DADAEB77370044A8BC98DA1A842D044F.jpg]</span></li><li><span class='time'>2026-05-27 19:19:52</span><span class='speaker'>裤(1106479930)</span><span class='content'>好像有个说法是，过几年入行的新人好像就是会高点</span></li><li><span class='time'>2026-05-27 19:20:11</span><span class='speaker'>裤(1106479930)</span><span class='content'>老人只要不跳槽涨的慢</span></li><li><span class='time'>2026-05-27 19:23:52</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>没有用的</span></li><li><span class='time'>2026-05-27 19:23:59</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>结果是一起玩玩</span></li><li><span class='time'>2026-05-27 19:24:15</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>你想想机器人都代替人类工作了，那么工资从哪里来？</span></li><li><span class='time'>2026-05-27 19:24:20</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>人类的工资从哪里来？</span></li><li><span class='time'>2026-05-27 19:24:34</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>没有工资就能只能等死</span></li><li><span class='time'>2026-05-27 19:25:04</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>所为了AI，所谓的机器人都会成为镜中月，水中花</span></li><li><span class='time'>2026-05-27 19:25:21</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>跟我解释一下，人类的工资从哪里来？</span></li><li><span class='time'>2026-05-27 19:27:07</span><span class='speaker'>Inori(1144511082)</span><span class='content'>[回复 u_fo_VHAYVY4psyQA35Exn2w: 人类的工资从哪里来？] @程序-策划 靠泡沫来</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-37">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 37</div>
-                  <h2>重构示范与技术表演案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-27 20:16:54 - 2026-05-27 20:33:36</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>26</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>重构、技术判断与对外展示欲</p></div>
-              <div class="note-block"><h3>起因</h3><p>程序-策划举代码和重构例子，试图建立自己的技术解释权。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>他倾向通过长段代码和定义来掌控话题，别人则更容易把这类输出当成可被调侃的表演。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众并不总认真回应技术内容，常把它纳入‘节目效果’。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这直接为后续 Eggnisi 把相关内容当笑柄做铺垫。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-27 20:16:54</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>[图片: FD8579F0198B737D5BDE697026BB67BE.jpg] [image: FD8579F0198B737D5BDE697026BB67BE.jpg]</span></li><li><span class='time'>2026-05-27 20:17:03</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>搞起搞起</span></li><li><span class='time'>2026-05-27 20:18:43</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@君の名は 你这话说的</span></li><li><span class='time'>2026-05-27 20:18:53</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>架构的问题，你找JAVA</span></li><li><span class='time'>2026-05-27 20:19:32</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>又可以逗傻逼玩了嘛</span></li><li><span class='time'>2026-05-27 20:21:12</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>为什么走到哪都有一个小号进群呢？</span></li><li><span class='time'>2026-05-27 20:24:52</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>我举个例子哈，重构一定是伤筋动骨</span></li><li><span class='time'>2026-05-27 20:25:27</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>好的重构能让代码看起来更简洁，功能更丰富，坏的重构可以让代码频繁的死机，问题多多</span></li><li><span class='time'>2026-05-27 20:27:28</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>#include &lt;stdio.h&gt; // 全局变量，极易被意外修改，隐患极大 int s1, s2, s3; int main(void) { // 第一组成绩计算 printf(&quot;请输入3科成绩：&quot;); scanf(&quot;%d%d%d&quot;, &amp;s1, &amp;s2, &amp;s3); int total = s1 + s2 + s3; double avg = total / 3.0; printf(&quot;总分：%d，平均分：%.2f\n&quot;, total, avg); // 完全重复的计算逻辑，写第二遍 int a = 60, b = 75, c = 88; int t = a + b + c; double av = t / 3.0; printf(&quot;总分：%d，平均分：%.2f\n&quot;, t, av); return 0; }</span></li><li><span class='time'>2026-05-27 20:27:33</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>比如这一段代码</span></li><li><span class='time'>2026-05-27 20:27:40</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>重构会好多</span></li><li><span class='time'>2026-05-27 20:28:00</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>#include &lt;stdio.h&gt; // 1. 用结构体封装数据，告别零散变量 typedef struct { int chinese; int math; int english; } Score; // 2. 拆分独立函数，一个函数只做一件事 static int get_total(Score sc) { return sc.chinese + sc.math + sc.english; } static double get_average(Score sc) { return get_total(sc) / 3.0; } // 3. 统一打印逻辑，彻底消除重复代码 static void show_result(Score sc) { printf(&quot;总分：%d，平均分：%.2f\n&quot;, get_total(sc), get_average(sc)); } int main(void) { // 4. 去掉全局变量，数据作用域可控 Score stu1; printf(&quot;请输入3科成绩：&quot;); scanf(&quot;%d%d%d&quot;, &amp;stu1.chinese, &amp;stu1.math, &amp;stu1.english); show_result(stu1); // 新增数据，直接调用即可，不用重写代码 Score stu2 = {60, 75, 88}; show_result(stu2); return 0; }</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-38">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 38</div>
-                  <h2>成圣学与造谣指控公开辩经案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-27 20:54:01 - 2026-05-27 22:38:30</span></div>
-                <div><strong>冲突等级</strong><span>极高</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>353</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>成圣学、造谣指控、技术笑柄与公开辩经</p></div>
-              <div class="note-block"><h3>起因</h3><p>Eggnisi 主动翻旧账，把程序-策划过去的长段表达、重构逻辑和豆包生成代码包装成笑点公开展示。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>Eggnisi 认为程序-策划的表达狗屁不通、像传销和圣人学说，是值得群嘲的对象；程序-策划则立即反击，指控 Eggnisi 造谣、背后说坏话、只会蛐蛐别人不上台正讲，并要求对方公开阐明所谓‘成圣学’。裤的插话多是问概念、递梗或要求‘开点正常人’，既没有真正降温，也在继续提供观众席反应。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众大量依赖截图、前情提要和卡片消息理解冲突，典型反应是追问‘发生了什么’、等待双方继续表演。围观不只是背景，而是这类争论赖以成立的舞台。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这次冲突把程序-策划与 Eggnisi 的关系从一般互呛升级成公开的风格对决。之后凡涉及程序-策划的大段理论表达，都会被纳入‘圣人学说’的既有框架里重新解读。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-27 20:54:01</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>这哥们的笑点就是</span></li><li><span class='time'>2026-05-27 20:54:14</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>中间说他狗屁不通的重构逻辑时</span></li><li><span class='time'>2026-05-27 20:54:22</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>漏了豆包的聊天链接分享</span></li><li><span class='time'>2026-05-27 20:55:20</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>很难绷住啊</span></li><li><span class='time'>2026-05-27 20:55:48</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>而且甚至生成的代码是大学生入门用的那种题目</span></li><li><span class='time'>2026-05-27 20:56:42</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>你们没有前情提要么</span></li><li><span class='time'>2026-05-27 20:56:54</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>之前这个哥们在宣传他的圣人学说</span></li><li><span class='time'>2026-05-27 20:57:10</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>搜一下他的聊天记录</span></li><li><span class='time'>2026-05-27 20:58:00</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: BC66785AB11AD31D1D4BF1DECF530C2B.png] [image: BC66785AB11AD31D1D4BF1DECF530C2B.png]</span></li><li><span class='time'>2026-05-27 20:58:11</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: A7BD497DFCCB395E3C7F500BEE27B338.png] [image: A7BD497DFCCB395E3C7F500BEE27B338.png]</span></li><li><span class='time'>2026-05-27 20:58:20</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>咱们中国的成圣学！！！</span></li><li><span class='time'>2026-05-27 20:59:00</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>总之进群早的能看到</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-39">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 39</div>
-                  <h2>夜间续战与辩经邀约案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-27 23:07:18 - 2026-05-27 23:59:50</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>24</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>辩经邀请与争论的戏剧化延续</p></div>
-              <div class="note-block"><h3>起因</h3><p>Eggnisi 在夜间再次主动点名程序-策划，公开喊话‘来辩经’。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>这里争论内容本身已不重要，重要的是保留对线舞台并维持事件热度。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者在此类阶段通常默认这是节目续集。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>事件表现出明显的续战和戏剧化特征。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-27 23:07:18</span><span class='speaker'>裤(1106479930)</span><span class='content'>3d太难了</span></li><li><span class='time'>2026-05-27 23:24:12</span><span class='speaker'>裤(1106479930)</span><span class='content'>恐怖</span></li><li><span class='time'>2026-05-27 23:28:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>豆包，给我做一份麻辣火锅</span></li><li><span class='time'>2026-05-27 23:38:37</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@程序-策划</span></li><li><span class='time'>2026-05-27 23:38:46</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>来辩经！</span></li><li><span class='time'>2026-05-27 23:38:54</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我来告诉你</span></li><li><span class='time'>2026-05-27 23:39:00</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>何为真正的心学！！！</span></li><li><span class='time'>2026-05-27 23:41:50</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-27 23:41:59</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@程序-策划</span></li><li><span class='time'>2026-05-27 23:42:06</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>来辩经吧</span></li><li><span class='time'>2026-05-27 23:42:14</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>真理越辩越明！</span></li><li><span class='time'>2026-05-27 23:42:34</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>不知道</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-40">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 40</div>
-                  <h2>项目理解与信任残留案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-28 00:00:16 - 2026-05-28 00:21:12</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>68</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>项目理解、组织能力和表达信任</p></div>
-              <div class="note-block"><h3>起因</h3><p>讨论继续围绕项目组织与个人理解能力展开，冲突残留未完全消退。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>当事人更关心彼此是否值得信任，而不是单点问题对错。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者多以观察和补梗为主。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>为后续炸队责任话题的爆发继续积蓄情绪。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-28 00:00:16</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {FA34F60A-0ACA-A161-F755-425AFEA5A2AB}.gif] [image: {FA34F60A-0ACA-A161-F755-425AFEA5A2AB}.gif]</span></li><li><span class='time'>2026-05-28 00:00:28</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>别挖苦我了</span></li><li><span class='time'>2026-05-28 00:00:30</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-28 00:00:36</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我没工作喵</span></li><li><span class='time'>2026-05-28 00:01:11</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我有神人雷达啊</span></li><li><span class='time'>2026-05-28 00:01:24</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>这几个人哪个不神</span></li><li><span class='time'>2026-05-28 00:01:33</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-28 00:07:33</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>可惜</span></li><li><span class='time'>2026-05-28 00:07:37</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>刚才在爬塔</span></li><li><span class='time'>2026-05-28 00:07:55</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>没有赶上和心学大佬的学术对话</span></li><li><span class='time'>2026-05-28 00:08:22</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>你们说</span></li><li><span class='time'>2026-05-28 00:08:31</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>整理一个金海豚风云录</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-43">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 43</div>
-                  <h2>旧冲突余波再点燃案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-28 17:47:09 - 2026-05-28 18:41:43</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、Eggnisi(3188064505)</span></div>
-                <div><strong>消息数</strong><span>44</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>旧冲突余波与群内声望竞争</p></div>
-              <div class="note-block"><h3>起因</h3><p>前期争论的标签继续在新话题里被拿出来使用。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>参与者通过旧案新提的方式重新争夺解释权。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者对前情越熟，越容易把简单对话升级成站队。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>说明冲突已经从事件变成持续背景。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-28 17:47:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>就事论事就行</span></li><li><span class='time'>2026-05-28 17:49:19</span><span class='speaker'>裤(1106479930)</span><span class='content'>两边都没啥问题其实</span></li><li><span class='time'>2026-05-28 17:49:21</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg] [image: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg]</span></li><li><span class='time'>2026-05-28 17:49:39</span><span class='speaker'>裤(1106479930)</span><span class='content'>但开始人身攻击就很无聊了</span></li><li><span class='time'>2026-05-28 17:51:59</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg] [image: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg]</span></li><li><span class='time'>2026-05-28 17:53:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_HieeC0CFQSBri-_g0PhOyA: 盒的牌效是不是太高了] 能不高吗</span></li><li><span class='time'>2026-05-28 17:53:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>资历攻击(</span></li><li><span class='time'>2026-05-28 17:54:54</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: D702A02672E4FD30F1AE0F7712173ED1.jpg] [image: D702A02672E4FD30F1AE0F7712173ED1.jpg]</span></li><li><span class='time'>2026-05-28 17:55:09</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>不知道，感觉像是兴趣小组性质的</span></li><li><span class='time'>2026-05-28 17:55:29</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>之前去问猫桥，猫桥也不招程序了</span></li><li><span class='time'>2026-05-28 17:55:33</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-28 17:55:56</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>这可要不少战斗</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-44">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 44</div>
-                  <h2>名声标签化传播案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-28 23:07:30 - 2026-05-28 23:40:07</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>59</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>人设、名声与群体记忆的再生产</p></div>
-              <div class="note-block"><h3>起因</h3><p>讨论已带上明显的人设化标签，彼此不再只是就事论事。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>当事人都在争夺别人如何记住自己和记住对方。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众是记忆传播者，不断用梗和概括语给事件定调。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>冲突不一定很吵，但记忆很牢。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-28 23:07:30</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@全局事件管线-策划-招募2D美术UI 小姑娘，你在说啥？</span></li><li><span class='time'>2026-05-28 23:25:31</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>主题是战斗爽</span></li><li><span class='time'>2026-05-28 23:27:00</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: D702A02672E4FD30F1AE0F7712173ED1.jpg] [image: D702A02672E4FD30F1AE0F7712173ED1.jpg]</span></li><li><span class='time'>2026-05-28 23:27:04</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: 57FCF79C6E9897308D3B2A160DE17FC8.jpg] [image: 57FCF79C6E9897308D3B2A160DE17FC8.jpg]</span></li><li><span class='time'>2026-05-28 23:27:20</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_BAPpCPOyx_nSHL3U2v1TzQ: 要维持一个稳定的服务器，大部分人不知道这是个什么难度] @李白的歌 什么难度</span></li><li><span class='time'>2026-05-28 23:27:57</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_BAPpCPOyx_nSHL3U2v1TzQ: 而一旦出Bug，卡顿，原来有好感的玩家，都会各种开喷] @李白的歌 居然有玩家</span></li><li><span class='time'>2026-05-28 23:28:02</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>已经很棒啦</span></li><li><span class='time'>2026-05-28 23:29:27</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>比起开发游戏更难的是，你做个游戏，居然还要凑齐几个人，同时没事，而且同时对做这个游戏感兴趣</span></li><li><span class='time'>2026-05-28 23:29:37</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>这个更是地狱级难度</span></li><li><span class='time'>2026-05-28 23:29:47</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>所以说，合作开发很愚蠢</span></li><li><span class='time'>2026-05-28 23:29:57</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg] [image: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg]</span></li><li><span class='time'>2026-05-28 23:29:59</span><span class='speaker'>李白的歌(3659965607)</span><span class='content'>打个麻将，都经常三缺一呢</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-47">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 47</div>
-                  <h2>禁言传闻与文本化攻击案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-29 12:16:48 - 2026-05-29 12:36:02</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>33</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>禁言、传闻与群外文本化攻击</p></div>
-              <div class="note-block"><h3>起因</h3><p>事件链发展到有人用更完整文本重述、嘲讽或封装某人的形象。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>争论不再局限于即时聊天，而是通过长文、讣告式文本、截图等方式固化。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者会主动转发、引用和再创造文本。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>冲突开始具备‘二次文档化’特征。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-29 12:16:48</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>主打一个战斗</span></li><li><span class='time'>2026-05-29 12:26:17</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@v好想喝椰奶v 舒服在哪</span></li><li><span class='time'>2026-05-29 12:26:32</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>debugger完全找不到元素</span></li><li><span class='time'>2026-05-29 12:26:48</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>unity自带的debugger一直闪烁</span></li><li><span class='time'>2026-05-29 12:27:07</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>那你教我下</span></li><li><span class='time'>2026-05-29 12:27:12</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@v好想喝椰奶v</span></li><li><span class='time'>2026-05-29 12:27:15</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg] [image: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg]</span></li><li><span class='time'>2026-05-29 12:27:38</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我不到啊</span></li><li><span class='time'>2026-05-29 12:27:44</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-29 12:28:05</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>椰奶大人，UI就交给您了</span></li><li><span class='time'>2026-05-29 12:28:09</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-29 12:28:32</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>他的框架不需要ugui</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-55">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 55</div>
-                  <h2>复活叙事与群体拱火回归案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-30 18:57:44 - 2026-05-30 22:18:40</span></div>
-                <div><strong>冲突等级</strong><span>高</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>156</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>复活叙事、拉黑关系与群体拱火</p></div>
-              <div class="note-block"><h3>起因</h3><p>Eggnisi 以‘我复活了’重新进场，迅速把自己重新放回群体注意力中心；麻、裤与其他人也马上接入旧梗。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>Eggnisi 一边自嘲一边试图重建主导权，用‘和谐相处’‘🥚要从良了’这样的说法自我包装；裤则不断以玩笑形式确认其仍是冲突核心人物，并提醒别人拉黑、战斗、整活这些背景事实；麻的发言很短，但‘刷怪笼’‘祖坟风水’说明其态度仍明显对立。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众反应以围观、搭梗、追问原因和继续角色化称呼为主。没有人真正试图把旧案清零，大家更像是在欢迎‘角色’回归舞台。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这场事件本质上是旧冲突的再开机。虽然表面比 5 月 26 日温和，但它重新确认了 Eggnisi 在群里的争议中心位置。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-30 18:57:44</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>吃🥚</span></li><li><span class='time'>2026-05-30 19:01:00</span><span class='speaker'>麻(1075750195)</span><span class='content'>顶级刷怪笼</span></li><li><span class='time'>2026-05-30 19:01:07</span><span class='speaker'>麻(1075750195)</span><span class='content'>群主看看祖坟风水吧</span></li><li><span class='time'>2026-05-30 19:01:11</span><span class='speaker'>麻(1075750195)</span><span class='content'>[图片: 9860ECA5850CC68B9F8206C6FE3193D8.png] [image: 9860ECA5850CC68B9F8206C6FE3193D8.png]</span></li><li><span class='time'>2026-05-30 19:02:43</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@麻</span></li><li><span class='time'>2026-05-30 19:02:47</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>我复活了</span></li><li><span class='time'>2026-05-30 19:15:22</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_GBMGi3VAIHbyu_ii1X8H8Q: @麻] 你被拉黑了，王不见王</span></li><li><span class='time'>2026-05-30 19:15:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_gITaM3i6Jrm0aWo_jHMqVg: [图片]] 臭</span></li><li><span class='time'>2026-05-30 19:15:35</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>还是裤好啊</span></li><li><span class='time'>2026-05-30 19:15:39</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>都不拉黑我</span></li><li><span class='time'>2026-05-30 19:15:42</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg] [image: EDC1EFB3DC7B5368BFFBCE6DC50AB571.jpg]</span></li><li><span class='time'>2026-05-30 19:15:51</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {EDC1EFB3-DC7B-5368-BFFB-CE6DC50AB571}.gif] [image: {EDC1EFB3-DC7B-5368-BFFB-CE6DC50AB571}.gif]</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-56">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 56</div>
-                  <h2>炸队责任与跑路指控案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-30 22:38:46 - 2026-05-30 23:59:22</span></div>
-                <div><strong>冲突等级</strong><span>极高</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>123</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>炸队责任、跑路指控、工作报告与舆论组织</p></div>
-              <div class="note-block"><h3>起因</h3><p>围绕某项目组解散或失序的旧案再次被提起，裤先把它描述成‘还有下集’，随后 Eggnisi 与他人口中的策划责任问题正面碰撞。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>Eggnisi 的主张非常明确：自己不是跑路，而是在项目已失去信心后做了整理、写了工作报告、再退出；真正的问题是策划失责、造谣其跑路、甚至说他把美术拐走。反方或围观者的既有叙述则更接近‘队伍炸了以后各执一词’，有人淡化炸组的特殊性，也有人强调文字游戏没必要。裤在这里成了高频外部解说员，不断把战况翻译成‘策划说 egg 是跑路，egg 说责任在策划，所以不是跑路’这类一句话摘要。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群众反应最典型的是拱火、求总结、半信半疑和继续追问前因后果。有人愿意接受 Eggnisi 的证据式叙述，有人则默认这类项目纠纷难有定论。围观者在不断索取简化版故事，因此双方都在争取叙述权，而不只是争取事实本身。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>这是所有冲突中最接近‘案卷化’的一次，因为它已经包含责任认定、证据材料、第三方口碑、当事人自述和围观者二次概括。事件并未真正闭合，但 Eggnisi 成功把议题从‘你是不是跑路’转成‘策划是否甩锅与造谣’。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-30 22:38:46</span><span class='speaker'>裤(1106479930)</span><span class='content'>哇</span></li><li><span class='time'>2026-05-30 22:38:53</span><span class='speaker'>裤(1106479930)</span><span class='content'>还有下集</span></li><li><span class='time'>2026-05-30 22:39:29</span><span class='speaker'>裤(1106479930)</span><span class='content'>不错</span></li><li><span class='time'>2026-05-30 22:40:28</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg] [image: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg]</span></li><li><span class='time'>2026-05-30 22:41:34</span><span class='speaker'>裤(1106479930)</span><span class='content'>并非炸队被说都能忍的吗</span></li><li><span class='time'>2026-05-30 22:43:09</span><span class='speaker'>裤(1106479930)</span><span class='content'>心胸宽广啊</span></li><li><span class='time'>2026-05-30 22:53:26</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@小欣散修 那就要看你自己的了</span></li><li><span class='time'>2026-05-30 22:53:55</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_3uM6rGiBadLdXUEJPZscpA: @路边一条的全栈 咋说呢，节奏是很容易带的，如果聊天记录选的好谁都能拉出一支军队，🥚说他没跑路然后没写小作文，我说我几乎没遇见队伍爆炸，我都做了五六款小游戏都发itch了，真没见几个队伍爆炸的，难道我还要转发一堆我其他组的聊天记录来攻击🥚吗，我就没想跟他吵，反正他既然说没跑路也没写小作文就按他说的来呗，争文字游戏有啥必要] @策划 赵九霄 这跟炸队伍没啥关系吧，你就算做了100款游戏，只炸了一个，你随便造谣别人跑路也没脑子了吧。更何况所有当事人都觉得是策划赵老师您的责任，要不要把当初的成员拉回来，我们开个圆桌会议？</span></li><li><span class='time'>2026-05-30 22:54:24</span><span class='speaker'>裤(1106479930)</span><span class='content'>战斗！战斗！！！！！1</span></li><li><span class='time'>2026-05-30 22:54:28</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>本身炸组的责任在谁？为什么会说程序跑路？为什么还说程序把美术拐走了？</span></li><li><span class='time'>2026-05-30 22:54:46</span><span class='speaker'>穆图 策划(1731642890)</span><span class='content'>[回复 u_GBMGi3VAIHbyu_ii1X8H8Q: @策划 赵九霄 这跟炸队伍没啥关系吧，你就算做了100款游戏，只炸了一个，你随便造谣别人跑路也没脑子了吧。更何况所有当事人都觉得是策划赵老师您的责任，要不要把当初的成员拉回来，我们开个圆桌会议？] @Eggnisi 谁是莫德雷德？</span></li><li><span class='time'>2026-05-30 22:54:52</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>你就算做了100个小游戏跟我又有什么关系？</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-57">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 57</div>
-                  <h2>战后闲谈中的持续阴影案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-31 00:00:01 - 2026-05-31 00:37:21</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>裤(1106479930)、Eggnisi(3188064505)</span></div>
-                <div><strong>消息数</strong><span>30</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>旧战后闲谈中的持续影子</p></div>
-              <div class="note-block"><h3>起因</h3><p>裤和 Eggnisi 在较轻的聊天里仍会带出‘你每次都不在’‘又是哪些人’这类旧关系阴影。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>虽然不再激烈，但说话背景仍带着前几日的关系余波。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>群友更多把它当普通群聊，不主动升级。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>说明冲突已内化为日常互动底色。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-31 00:00:01</span><span class='speaker'>裤(1106479930)</span><span class='content'>扣个图标</span></li><li><span class='time'>2026-05-31 00:00:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_V_i3zzlD7Y8lw7ehR8RX6Q: 能掰扯回来也是一种本事？] 因为没啥扣题审查</span></li><li><span class='time'>2026-05-31 00:00:49</span><span class='speaker'>裤(1106479930)</span><span class='content'>很多看起来掰扯不回来的</span></li><li><span class='time'>2026-05-31 00:00:55</span><span class='speaker'>裤(1106479930)</span><span class='content'>也能过</span></li><li><span class='time'>2026-05-31 00:01:16</span><span class='speaker'>裤(1106479930)</span><span class='content'>这样</span></li><li><span class='time'>2026-05-31 00:09:18</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: {39A75710-22BC-F4B1-9C0F-D2662620C93D}.gif]好像每次你都不在 [image: {39A75710-22BC-F4B1-9C0F-D2662620C93D}.gif]</span></li><li><span class='time'>2026-05-31 00:09:33</span><span class='speaker'>裤(1106479930)</span><span class='content'>今晚好像很多美术老师</span></li><li><span class='time'>2026-05-31 00:09:58</span><span class='speaker'>裤(1106479930)</span><span class='content'>可惜都不发图</span></li><li><span class='time'>2026-05-31 00:12:34</span><span class='speaker'>溯江流(791926755)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: [图片]好像每次你都不在] 我都是上班时间才一直水@裤</span></li><li><span class='time'>2026-05-31 00:12:52</span><span class='speaker'>裤(1106479930)</span><span class='content'>好图</span></li><li><span class='time'>2026-05-31 00:13:21</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[回复 u_6Z2BVgh0BlEGTYwE_1Ggpg: [图片]] @理 想被踩</span></li><li><span class='time'>2026-05-31 00:13:25</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg] [image: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg]</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-58">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 58</div>
-                  <h2>岗位边界与指点式发言案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-31 13:04:44 - 2026-05-31 13:36:19</span></div>
-                <div><strong>冲突等级</strong><span>中</span></div>
-                <div><strong>涉及人员</strong><span>Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>25</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>岗位定义、专业边界与指点式发言</p></div>
-              <div class="note-block"><h3>起因</h3><p>程序-策划从‘什么叫功能程序’切入，对岗位边界下定义。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>程序-策划强调战斗程序、UI、策划分工的清晰界限，试图以专业解释掌握话语权；Eggnisi 则在旁边用 Logo、手绘、台词等插话打断节奏，形成轻微拆台效果。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者一方面听解释，一方面默许这种话题被带成表演。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>冲突烈度不高，但再次凸显两人的表达习惯完全不同。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-31 13:04:44</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@个人开发（寻地编，场景，功能程序） 什么叫功能程序？</span></li><li><span class='time'>2026-05-31 13:04:52</span><span class='speaker'>个人开发（寻地编，场景，功能程序）(2484440411)</span><span class='content'>[回复 u_fo_VHAYVY4psyQA35Exn2w: @个人开发（寻地编，场景，功能程序） 什么叫功能程序？] @程序-策划 就是各种功能</span></li><li><span class='time'>2026-05-31 13:05:28</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>这是ui</span></li><li><span class='time'>2026-05-31 13:05:35</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>你要找的根本不是程序</span></li><li><span class='time'>2026-05-31 13:05:58</span><span class='speaker'>个人开发（寻地编，场景，功能程序）(2484440411)</span><span class='content'>[回复 u_fo_VHAYVY4psyQA35Exn2w: 你要找的根本不是程序] @程序-策划 战斗也要程序</span></li><li><span class='time'>2026-05-31 13:06:30</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>但这些又有很多划分</span></li><li><span class='time'>2026-05-31 13:06:43</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>战斗程序可以负责所有的东西</span></li><li><span class='time'>2026-05-31 13:06:53</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>但他是不会负责UI的</span></li><li><span class='time'>2026-05-31 13:07:47</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>因为这玩意是策划干的活</span></li><li><span class='time'>2026-05-31 13:08:11</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@程序-策划</span></li><li><span class='time'>2026-05-31 13:09:03</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>@个人开发（寻地编，场景，功能程序） 来我写战斗吧</span></li><li><span class='time'>2026-05-31 13:09:21</span><span class='speaker'>程序-策划(784633132)</span><span class='content'>因为战斗程序员一般都是核心算法工程师</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
-            <section class="case-detail" id="case-62">
-              <div class="detail-head">
-                <div>
-                  <div class="case-id">案件 62</div>
-                  <h2>全神队玩笑式临时缝合案</h2>
-                </div>
-                <a class="back-link" href="#timeline">返回时间线</a>
-              </div>
-              <div class="detail-grid">
-                <div><strong>时间</strong><span>2026-05-31 18:21:27 - 2026-05-31 19:28:26</span></div>
-                <div><strong>冲突等级</strong><span>低</span></div>
-                <div><strong>涉及人员</strong><span>麻(1075750195)、裤(1106479930)、Eggnisi(3188064505)、程序-策划(784633132)</span></div>
-                <div><strong>消息数</strong><span>50</span></div>
-              </div>
-              <div class="note-block"><h3>主题</h3><p>以组队玩笑暂时缝合冲突关系</p></div>
-              <div class="note-block"><h3>起因</h3><p>围绕美术、场景、原画等话题聊开后，Eggnisi 主动点名裤、麻、程序-策划，提议四人组队。</p></div>
-              <div class="note-block"><h3>双方/多方主张</h3><p>这一段没有真正的对骂，反而像把前期对立关系转成‘全神队’式黑色幽默，承认彼此都是群内争议人物。</p></div>
-              <div class="note-block"><h3>群众反应</h3><p>围观者对这种组合的反应偏玩笑，默认四人的关系既危险又有节目效果。</p></div>
-              <div class="note-block"><h3>结果状态</h3><p>它没有消除旧矛盾，但证明四人的关系并非单线敌对，而是已经被群体叙事化、角色化。</p></div>
-              <div class="note-block">
-                <h3>关键记录</h3>
-                <ul class="message-list">
-                  <li><span class='time'>2026-05-31 18:21:27</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_dTVmY7aH-S09R7iUejvbDA: 感觉大部分美术都很擅长人物] 啊哈！</span></li><li><span class='time'>2026-05-31 18:22:35</span><span class='speaker'>平鱼（杂鱼美术）(892852660)</span><span class='content'>[回复 u_jTUtQ2H4ZrzfoGmRkEUeHA: 啊哈！] @裤 教我</span></li><li><span class='time'>2026-05-31 18:23:07</span><span class='speaker'>裤(1106479930)</span><span class='content'>角色原画因为人人都画角色 卷到天上去了</span></li><li><span class='time'>2026-05-31 18:24:26</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_B9jsmC2Ahn9ft7Rirpzn7w: @裤 教我] 这个是手绘板 这个是ps，学会了吗？好了，你可以尝试画一张百人插图啦！</span></li><li><span class='time'>2026-05-31 18:25:23</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg] [image: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg]</span></li><li><span class='time'>2026-05-31 18:27:42</span><span class='speaker'>裤(1106479930)</span><span class='content'>[回复 u_B9jsmC2Ahn9ft7Rirpzn7w: 场景不都是用3d做出来的吗大多数] 原画个实地也是两个东西</span></li><li><span class='time'>2026-05-31 18:28:16</span><span class='speaker'>裤(1106479930)</span><span class='content'>你不能让3D自己设计吧</span></li><li><span class='time'>2026-05-31 18:28:20</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg] [image: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg]</span></li><li><span class='time'>2026-05-31 18:33:49</span><span class='speaker'>裤(1106479930)</span><span class='content'>而且用2d画场景也不少</span></li><li><span class='time'>2026-05-31 18:33:51</span><span class='speaker'>裤(1106479930)</span><span class='content'>[图片: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg] [image: EC76BBF7806BF9D1A8DFD8C853C5BA08.jpg]</span></li><li><span class='time'>2026-05-31 18:40:17</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>@v好想喝椰奶v</span></li><li><span class='time'>2026-05-31 18:40:30</span><span class='speaker'>Eggnisi(3188064505)</span><span class='content'>[图片: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg] [image: C36D6F44C3C9DDD7B23D8383D7B1AFF9.jpg]</span></li>
-                </ul>
-              </div>
-              <a class="back-link bottom" href="#timeline">返回时间线</a>
-            </section>
-            
+    <section class="panel">
+      <h2>推荐阅读路径</h2>
+      <div class="reading-path">
+        <article class="path-step">
+          <div class="num">1</div>
+          <h3>先认角色</h3>
+          <p>如果你第一次看，先去人物页认识四人的冲突功能，再回来读案件，不然很容易分不清谁在推进、谁在定调。</p>
+        </article>
+        <article class="path-step">
+          <div class="num">2</div>
+          <h3>只看主线案</h3>
+          <p>优先看 19、27、38、56。它们能最清楚地解释旧时期为什么会从争论走向宿怨。</p>
+        </article>
+        <article class="path-step">
+          <div class="num">3</div>
+          <h3>再补支线案</h3>
+          <p>读 28、34、55 这类复盘案和续战案，理解群体记忆是怎么被制造出来的。</p>
+        </article>
+        <article class="path-step">
+          <div class="num">4</div>
+          <h3>最后看案目索引</h3>
+          <p>剩余案件更多是主线的延伸、预热或余波，不必一开始逐条硬啃。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>术语表</h2>
+      <div class="grid">
+        <article class="term-card">
+          <strong>炸队 / 跑路</strong>
+          <p>指项目组中途失序、散伙或被指责中途退出。旧时期后半段，“谁该为炸队负责”是冲突升级的重要引线。</p>
+        </article>
+        <article class="term-card">
+          <strong>成圣学</strong>
+          <p>对程序-策划那种长段定义、宏大解释、像在建立理论权威的说话方式的梗化命名。</p>
+        </article>
+        <article class="term-card">
+          <strong>复活</strong>
+          <p>Eggnisi 重新回场并主动把自己放回注意力中心，不是简单回来聊天，而是把旧案重新带回舞台。</p>
+        </article>
+        <article class="term-card">
+          <strong>战况转述</strong>
+          <p>围观者把复杂对线压缩成一句简报，例如裤常做的“所以现在是在吵谁造谣谁跑路”。这会直接影响群体理解。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>主线案件</h2>
+      <div class="mainline">
+        <article class="case-card" id="case-19">
+          <div class="case-meta">2026-05-24 · 主线案 19 · 关系结构定型</div>
+          <h3>留学身份、说教姿态与公开对线升级案</h3>
+          <div class="summary-grid">
+            <div><strong>起因</strong><span>原本围绕美术协作、AI 写代码和项目分工的讨论，逐渐引向“谁站在高位说教”。</span></div>
+            <div><strong>升级点</strong><span>麻开始把矛盾从话题分歧拉向身份姿态判断，四人随后全部卷入。</span></div>
+            <div><strong>双方主张</strong><span>麻反感高位说教和身份压人；裤持续追问协作与分工；Eggnisi 与程序-策划把争论推向更公开的人格与立场判断。</span></div>
+            <div><strong>结果 / 余波</strong><span>“留学身份”“说教姿态”“是否高高在上”被固定成后续多案反复调用的标签。</span></div>
+          </div>
+          <div class="summary-grid">
+            <div><strong>主对线</strong><span>麻 vs 说教型发言者，随后卷成四人场。</span></div>
+            <div><strong>转述者</strong><span>裤负责不断提问、接话和把复杂内容翻成可围观的短句。</span></div>
+            <div><strong>围观作用</strong><span>围观者不仅没让争论冷却，反而通过“还有下集吗”式反应把它推成节目。</span></div>
+            <div><strong>案后影响</strong><span>旧时期第一次明显形成长期敌意结构，后续几乎所有大案都能回响到这里。</span></div>
+          </div>
+          <ul class="quote-list">
+            <li><span class="quote-time">导火索</span><strong>裤：</strong>连续追问“为什么美术不能参与多个项目”“AI 写代码这块”。</li>
+            <li><span class="quote-time">升级</span><strong>麻：</strong>把矛盾从技术问题拉向“有人站在高位说教、拿身份压人”。</li>
+            <li><span class="quote-time">定调</span><strong>围观群友：</strong>“你从前面开始看”“还有下集”，说明围观本身已经成为事件的一部分。</li>
+          </ul>
+        </article>
+
+        <article class="case-card" id="case-27">
+          <div class="case-meta">2026-05-26 · 主线案 27 · 人身化升级</div>
+          <h3>学历真伪、求职结果与作品含金量对撞案</h3>
+          <div class="summary-grid">
+            <div><strong>起因</strong><span>麻直接点名 Eggnisi，质疑其学校、学历叙事和群外行为。</span></div>
+            <div><strong>升级点</strong><span>争论不再停留在态度和风格，而是直接把履历、学校、作品、求职结果拉上台面。</span></div>
+            <div><strong>双方主张</strong><span>麻主张对方靠学历包装、被戳破后急于防守；Eggnisi 反击麻“高学历海归却求职不顺”，并用截图和反问抢回节奏。</span></div>
+            <div><strong>结果 / 余波</strong><span>这是旧时期最典型的人身化案件，之后一提到学历、留学、群外装逼，都会回到这场对撞。</span></div>
+          </div>
+          <div class="summary-grid">
+            <div><strong>主对线</strong><span>麻 vs Eggnisi。</span></div>
+            <div><strong>转述者</strong><span>裤负责战况播报和公共复述，扩大了群体观众面。</span></div>
+            <div><strong>围观作用</strong><span>围观者在找截图、问前情、讨论谁拉黑谁，进一步把个体争吵变成公演。</span></div>
+            <div><strong>案后影响</strong><span>旧时期从“争论谁更对”转入“谁更值得被羞辱”的危险阶段。</span></div>
+          </div>
+          <ul class="quote-list">
+            <li><span class="quote-time">导火索</span><strong>麻：</strong>公开点名 Eggnisi，质疑其学校与学历叙述。</li>
+            <li><span class="quote-time">升级</span><strong>Eggnisi：</strong>不只辩解，而是反打对方求职与能力，争论彻底变成人身化对撞。</li>
+            <li><span class="quote-time">定调</span><strong>裤：</strong>把案件转述成“刚刚蛋哥和麻哥打起来了不是”，说明这场冲突已经被群体当成节目。</li>
+          </ul>
+        </article>
+
+        <article class="case-card" id="case-38">
+          <div class="case-meta">2026-05-27 · 主线案 38 · 风格对撞定型</div>
+          <h3>“成圣学”、造谣指控与公开辩经案</h3>
+          <div class="summary-grid">
+            <div><strong>起因</strong><span>Eggnisi 主动翻旧账，把程序-策划过去的长段理论和重构表达重新拿出来当笑点展示。</span></div>
+            <div><strong>升级点</strong><span>程序-策划把这视为造谣、背后说坏话，要求正面公开辩清。</span></div>
+            <div><strong>双方主张</strong><span>Eggnisi 认为程序-策划的表达犬儒、悬浮、像“成圣学”；程序-策划则要求对方停止梗化和歪曲。</span></div>
+            <div><strong>结果 / 余波</strong><span>程序-策划此后不再只是“喜欢长段输出的人”，而被固定进“成圣学”框架里，表达一出现就会被梗化。</span></div>
+          </div>
+          <div class="summary-grid">
+            <div><strong>主对线</strong><span>Eggnisi vs 程序-策划。</span></div>
+            <div><strong>转述者</strong><span>裤在其中更多是递梗和追问，没有真正降温。</span></div>
+            <div><strong>围观作用</strong><span>围观者大量依靠截图和卡片消息理解案情，群体不是背景，而是舞台。</span></div>
+            <div><strong>案后影响</strong><span>旧时期最典型的“风格人格化”案件，为后续一切嘲讽型再利用打了底。</span></div>
+          </div>
+          <ul class="quote-list">
+            <li><span class="quote-time">导火索</span><strong>Eggnisi：</strong>主动翻出旧表达并公开展示，等于宣布要把旧债再开一轮。</li>
+            <li><span class="quote-time">升级</span><strong>程序-策划：</strong>指控对方造谣、只会背后坏笑，要求公开辩清所谓“成圣学”。</li>
+            <li><span class="quote-time">定调</span><strong>群体：</strong>不断追问“发生什么了”，靠截图和摘录消费这场风格对撞。</li>
+          </ul>
+        </article>
+
+        <article class="case-card" id="case-56">
+          <div class="case-meta">2026-05-30 · 主线案 56 · 责任案卷化</div>
+          <h3>炸队责任、跑路指控与叙事权争夺案</h3>
+          <div class="summary-grid">
+            <div><strong>起因</strong><span>旧项目散伙/失序的故事再次被提起，裤先把它预告成“还有下集”。</span></div>
+            <div><strong>升级点</strong><span>争论焦点从“你是不是跑路”变成“到底谁失责、谁在造谣、谁有证据”。</span></div>
+            <div><strong>双方主张</strong><span>Eggnisi 坚称自己不是跑路，而是在失去信心后做了整理、写了工作报告再退出；反方则延续“队炸了各执一词”的旧叙事。</span></div>
+            <div><strong>结果 / 余波</strong><span>这是旧时期最接近正式案卷的一案，责任、证据、口供和围观摘要全部到位，也直接逼近了后来的分界线。</span></div>
+          </div>
+          <div class="summary-grid">
+            <div><strong>主对线</strong><span>Eggnisi vs “策划失责/谁跑路”这一套群体叙事。</span></div>
+            <div><strong>转述者</strong><span>裤不断把复杂战况简化成一句摘要，让围观者能迅速站到某个版本上。</span></div>
+            <div><strong>围观作用</strong><span>围观者最关心的是“给我一个简化版故事”，于是双方都在争夺解释权，而不只是争事实。</span></div>
+            <div><strong>案后影响</strong><span>旧时期的人物恩怨在这里几乎已经碰到管理阈值，新时期的制度冲突就是从这种压力中长出来的。</span></div>
+          </div>
+          <ul class="quote-list">
+            <li><span class="quote-time">导火索</span><strong>裤：</strong>先把案件包装成“还有下集”，说明它在群体中早已具备连续剧性质。</li>
+            <li><span class="quote-time">升级</span><strong>Eggnisi：</strong>把议题重组为“策划是否失责并造谣”，而不是被动承受“跑路”标签。</li>
+            <li><span class="quote-time">定调</span><strong>围观群友：</strong>反复索要一句话总结，推动双方争叙事而不只是争事实。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>支线与余波案目</h2>
+      <div class="archive-grid">
+        <article class="archive-card">
+          <strong>预热案</strong>
+          <p>5、7、15：从组队、学历、岗位和项目讨论中，逐渐长出谁更有资格发言的底层张力。</p>
+        </article>
+        <article class="archive-card">
+          <strong>节奏案</strong>
+          <p>21、22、23、24、26、30、31、34、36、37、40：更多是在强化既有印象，例如谁像在说教、谁爱插话、谁喜欢抢定义权。</p>
+        </article>
+        <article class="archive-card">
+          <strong>复盘案</strong>
+          <p>28、39、43、44、55、57、58、62：并非每次都比主线案更激烈，但它们负责把旧案变成群体记忆、角色梗和固定标签。</p>
+        </article>
+      </div>
+    </section>
   </div>
 </body>
 </html>
