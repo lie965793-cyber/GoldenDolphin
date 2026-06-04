@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>金海豚史记分期总论</title>
+  <title>分期总论</title>
   <style>
     :root {
       --bg: #efe7dc;
@@ -13,277 +13,69 @@
       --line: #d9cbbb;
       --gold: #99612b;
       --red: #8d3d2d;
-      --teal: #245862;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(36,88,98,.15), transparent 24%),
-        radial-gradient(circle at top right, rgba(153,97,43,.14), transparent 28%),
-        linear-gradient(180deg, #f6efe5 0%, #ebe1d2 100%);
+      background: linear-gradient(180deg, #f6efe5 0%, #ebe1d2 100%);
     }
-    .wrap { max-width: 1160px; margin: 0 auto; padding: 40px 20px 80px; }
-    .panel {
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 40px 20px 80px; }
+    .panel, .card {
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow: 0 20px 50px rgba(58, 39, 19, .08);
-      margin-bottom: 22px;
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(58, 39, 19, .08);
     }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: 40px; margin-bottom: 12px; }
-    h2 { font-size: 28px; margin-bottom: 14px; }
-    h3 { font-size: 22px; margin-bottom: 10px; }
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(36,88,98,.1);
-      color: var(--teal);
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-    .lead, .panel p { color: var(--muted); line-height: 1.85; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .stat-card {
-      background: #fcf7f0;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px;
-    }
-    .stat-card .time {
-      color: var(--gold);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-    .core-list {
-      list-style: none;
-      padding: 0;
-      margin: 14px 0 0;
-      display: grid;
-      gap: 8px;
-    }
-    .core-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      background: #fffdf8;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px 12px;
-    }
-    .split {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 18px;
-    }
-    .case-card, .new-case {
-      background: #fcf7f0;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-    .case-meta {
-      color: var(--gold);
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    .new-case {
-      border-left: 5px solid var(--red);
-    }
-    .quote-list {
-      list-style: none;
-      padding: 0;
-      margin: 12px 0 0;
-      display: grid;
-      gap: 10px;
-    }
-    .quote-list li {
-      border: 1px dashed var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fffdf8;
-      line-height: 1.7;
-    }
-    .quote-list strong { margin-right: 8px; }
-    .qtime {
-      display: inline-block;
-      color: var(--red);
-      font-size: 12px;
-      margin-right: 8px;
-    }
-    .divider {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 10px;
-    }
-    .divider .item {
-      background: #fcf7f0;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 16px;
-    }
-    .nav {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .nav a {
-      text-decoration: none;
-      color: var(--teal);
-      font-weight: 700;
-    }
-    @media (max-width: 900px) {
-      .split { grid-template-columns: 1fr; }
-      h1 { font-size: 32px; }
-    }
+    .panel { padding: 28px; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .card { padding: 18px; }
+    h1 { margin: 0 0 10px; font-size: 38px; }
+    h2 { margin: 0 0 12px; font-size: 26px; }
+    h3 { margin: 0 0 8px; font-size: 20px; color: var(--gold); }
+    p, li { margin: 0; color: var(--muted); line-height: 1.8; }
+    ul { margin: 0; padding-left: 18px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+    .nav a { color: var(--red); text-decoration: none; font-weight: 700; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="panel">
-      <div class="eyebrow">Golden Dolphin Divine Records</div>
-      <h1>金海豚史记分期总论</h1>
-      <p class="lead">
-        本页把现有史记明确切成两个时期。旧金海豚时期的核心矛盾，是裤、麻、程序-策划、Eggnisi 四人之间的持续互相点名、翻旧账与争夺叙事权；新金海豚时期的核心矛盾，则转为更严苛的群管理/赛事组织制度，与普通群友对这种制度空气的摩擦。两者不能混写，否则会把“人物恩怨”误判成“制度冲突”，也会把“制度冲突”误判成某几个人的旧案延长线。
-      </p>
+      <h1>分期总论</h1>
+      <p>旧时期：2026-05-16 至 2026-05-31。新时期：2026-06-01 至 2026-06-04。</p>
       <div class="nav">
-        <a href="index.html">返回首页</a>
-        <a href="case-timeline.html">查看旧时期案件时间线</a>
-        <a href="character-biographies.html">查看旧时期四人传记</a>
+        <a href="index.html">首页</a>
+        <a href="case-timeline.html">旧时期案件</a>
+        <a href="character-biographies.html">四人角色</a>
       </div>
     </section>
-
-    <section class="panel">
-      <h2>数据边界</h2>
-      <div class="grid">
-        <article class="stat-card">
-          <div class="time">旧金海豚时期</div>
-          <h3>34452 条消息</h3>
-          <p>2026-05-16 00:16:29 至 2026-05-31 19:59:39</p>
-          <ul class="core-list"><li><strong>裤</strong><span>1545 条</span></li><li><strong>麻</strong><span>199 条</span></li><li><strong>程序-策划</strong><span>581 条</span></li><li><strong>Eggnisi</strong><span>1167 条</span></li></ul>
-        </article>
-        <article class="stat-card">
-          <div class="time">新金海豚时期</div>
-          <h3>4087 条消息</h3>
-          <p>2026-06-01 00:10:45 至 2026-06-04 23:00:15</p>
-          <ul class="core-list"><li><strong>裤</strong><span>85 条</span></li><li><strong>麻</strong><span>0 条</span></li><li><strong>程序-策划</strong><span>3 条</span></li><li><strong>Eggnisi</strong><span>73 条</span></li></ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>分界线</h2>
-      <div class="divider">
-        <div class="item">
-          <h3>时间分界</h3>
-          <p>两份源文件在时间上无缝衔接：旧档止于 2026-05-31 19:59:39，新档起于 2026-06-01 00:10:45。形式上，2026-06-01 是最直接的断点。</p>
-        </div>
-        <div class="item">
-          <h3>标志事件</h3>
-          <p>真正的标志事件不是单纯换天，而是 2026-06-01 00:33 以后连续出现“举报”“禁神”“戒严”，并在 15:23 被群友神话为“11点20分触怒众神、黑恶势力被镇压”。这说明群友已经把管理动作理解为一次改朝换代。</p>
-        </div>
-        <div class="item">
-          <h3>导火索</h3>
-          <p>旧时期高烈度冲突经过多轮复盘、复活与责任案卷化之后，终于触碰到群管理的处理阈值。于是新时期的焦点不再是四人谁对谁错，而是谁有资格留在场内、谁来认证、规则如何落地、空气为何变严。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="split">
-      <section class="panel">
-        <h2>旧金海豚时期案件</h2>
-        <p>这一时期必须按“四人矛盾簇”理解。核心不是群规，而是四名高频人物围绕学历、求职、项目责任、技术权威、说教姿态和群内叙事权展开的持续性冲突。围观群众的主要作用是转述、起哄、补截图和把案件变成集体记忆。</p>
-        
-            <article class="case-card old">
-              <div class="case-meta">2026-05-24 · 旧案 19</div>
-              <p>留学身份、说教姿态与公开对线升级，四人冲突开始固定成长期矛盾结构。</p>
-            </article>
-            
-            <article class="case-card old">
-              <div class="case-meta">2026-05-26 · 旧案 27</div>
-              <p>学历真伪、求职结果与作品含金量被直接拉上台面，是旧时期最典型的人身化案件。</p>
-            </article>
-            
-            <article class="case-card old">
-              <div class="case-meta">2026-05-26 · 旧案 28</div>
-              <p>大战后公开复盘，围观群众把当事人冲突转写成群体记忆。</p>
-            </article>
-            
-            <article class="case-card old">
-              <div class="case-meta">2026-05-27 · 旧案 38</div>
-              <p>“成圣学”与“造谣”公开辩经，Eggnisi 与程序-策划的风格对撞定型。</p>
-            </article>
-            
-            <article class="case-card old">
-              <div class="case-meta">2026-05-30 · 旧案 55</div>
-              <p>Eggnisi 以“我复活了”重新回场，旧案并未消散，只是被戏剧化重演。</p>
-            </article>
-            
-            <article class="case-card old">
-              <div class="case-meta">2026-05-30 · 旧案 56</div>
-              <p>“跑路/炸队责任”案卷化，四人冲突从互骂推进到责任认定与证据组织。</p>
-            </article>
-            
-        <p>完整旧案明细仍以 <a href="case-timeline.html">旧时期案件时间线</a> 为准。</p>
-      </section>
-
-      <section class="panel">
-        <h2>新金海豚时期案件</h2>
-        <p>这一时期必须和旧案显式隔离。四人仍有余波，但不再是主矛盾。真正的案件主体，变成“管理化秩序”与“普通群友体感”之间的摩擦。</p>
-        
-            <section class="new-case">
-              <div class="case-head">
-                <div class="case-meta">2026-06-01 00:33 - 09:07</div>
-                <h3>新案 1：清场余波与戒严感</h3>
-              </div>
-              <p>矛盾不再围绕四个人互相翻旧账本身，而是群友开始感知到管理介入、身份重新认证、群内空气骤变。</p>
-              <p><strong>导火索/核心含义：</strong>导火索是旧时期核心人物与群管理之间的处理方式落差被普通群友直观感知到，原本的人物矛盾开始转译成“管理标准是什么、谁被放进来、谁被限制”的制度疑问。</p>
-              <ul class="quote-list"><li><span class='qtime'>2026-06-01 00:38:10</span><strong>裤</strong><span>真有牌面吧！！！！我和蛋打生打死，没有群管理出来劝架，这人一进来，就群管理认证了</span></li><li><span class='qtime'>2026-06-01 00:52:42</span><strong>裤</strong><span>我刚进来的时候，管理说本群禁神</span></li><li><span class='qtime'>2026-06-01 09:06:32</span><strong>裤</strong><span>戒严了说是</span></li></ul>
-            </section>
-            
-            <section class="new-case">
-              <div class="case-head">
-                <div class="case-meta">2026-06-01 15:23 - 15:27</div>
-                <h3>新案 2：改朝换代的神话化叙事</h3>
-              </div>
-              <p>群友已经把管理动作理解成一次时代切换，并开始用半戏谑半纪年的方式给旧时期盖棺定性。</p>
-              <p><strong>导火索/核心含义：</strong>这里的标志事件不是某个四人案件的再爆发，而是 2026-06-01 11:20 被叙述成“触怒众神”的时刻，说明群友已经默认旧秩序被管理力量整体改写。</p>
-              <ul class="quote-list"><li><span class='qtime'>2026-06-01 15:23:51</span><strong>喙</strong><span>史书记载，一直被黑暗笼罩着的被称为“罪恶之谷”的金海豚山谷，在2026年6月1日11点20分触怒了众神，无形的大手镇压了山谷中包括蛋为首的所有黑恶势力，所有山谷原住民目前正在往大手所希望的方向发展……</span></li><li><span class='qtime'>2026-06-01 15:27:14</span><strong>喙</strong><span>我们仍未知道在那场战争中牺牲了多少人，也许在几年后，新进入山谷的小登们会从远古老登的嘴里听到发音为“dan”的名字……那是禁忌……</span></li></ul>
-            </section>
-            
-            <section class="new-case">
-              <div class="case-head">
-                <div class="case-meta">2026-05-31 11:24 - 2026-06-04 21:17</div>
-                <h3>新案 3：管理化重建与赛事秩序前置</h3>
-              </div>
-              <p>群聊主轴从人物对线切换为公告、招募表、审核、红包激励、报名状态与 QA 链接，普通群友开始围绕规则适配而不是围绕四人站队。</p>
-              <p><strong>导火索/核心含义：</strong>导火索是赛事推进需要更高密度的组织化管理，而这种管理化表达天然会压缩旧时期那种随时开战、随时围观的野生聊天秩序。</p>
-              <ul class="quote-list"><li><span class='qtime'>2026-05-31 11:24:08</span><strong>开群工具号</strong><span>新进群的朋友可以到【在线组队表】进行组队……也可以自行到小红书发布招募……具体规则请阅读群公告</span></li><li><span class='qtime'>2026-06-01 14:41:40</span><strong>开群工具号</strong><span>新进群的朋友可以到【在线组队表】进行组队……在小红书发布组队贴的可以找管理员3号领取5元现金红包……</span></li><li><span class='qtime'>2026-06-04 21:17:00</span><strong>管理员 5 号</strong><span>好游快爆×金海豚奖游戏赛事问题说明QA……活动官网链接……金海豚组队招募表格……报名状态查询……</span></li></ul>
-            </section>
-            
-            <section class="new-case">
-              <div class="case-head">
-                <div class="case-meta">2026-06-04 22:01</div>
-                <h3>新案 4：普通群友对严苛氛围的即时反应</h3>
-              </div>
-              <p>新时期真正的矛盾对象已经不是四个核心人物，而是普通群友对管理氛围的体感不适和疑问。</p>
-              <p><strong>导火索/核心含义：</strong>这句短问很关键，因为它把新时期矛盾明白无误地落在“管理空气是否过重”上，说明主轴已经从人物恩怨切到制度气候。</p>
-              <ul class="quote-list"><li><span class='qtime'>2026-06-04 22:01:11</span><strong>某驾校校长</strong><span>发生什么了，管理哈气了?</span></li></ul>
-            </section>
-            
-      </section>
+    <section class="grid">
+      <article class="card">
+        <h3>分界线</h3>
+        <p>2026-06-01</p>
+      </article>
+      <article class="card">
+        <h3>标志事件</h3>
+        <p>11:20 触怒众神</p>
+      </article>
+      <article class="card">
+        <h3>导火索</h3>
+        <p>旧案压力触碰管理阈值</p>
+      </article>
+      <article class="card">
+        <h3>旧时期主轴</h3>
+        <p>四人互撕与叙事权争夺</p>
+      </article>
+      <article class="card">
+        <h3>新时期主轴</h3>
+        <p>管理制度与普通群友摩擦</p>
+      </article>
+      <article class="card">
+        <h3>旧时期核心案</h3>
+        <p>19 / 27 / 38 / 56</p>
+      </article>
     </section>
   </div>
 </body>

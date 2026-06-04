@@ -7,12 +7,11 @@
   <style>
     :root {
       --bg: #f4f1ea;
-      --paper: rgba(255, 252, 245, 0.94);
+      --paper: rgba(255, 252, 245, 0.95);
       --ink: #1a1b1d;
       --muted: #5f646c;
       --line: #d7d1c5;
       --gold: #a06b2d;
-      --teal: #2f6a73;
     }
     * { box-sizing: border-box; }
     body {
@@ -23,62 +22,17 @@
         radial-gradient(circle at 20% 20%, rgba(47,106,115,.14), transparent 28%),
         radial-gradient(circle at 85% 10%, rgba(160,107,45,.18), transparent 24%),
         linear-gradient(180deg, #f7f2e9 0%, #ece7dc 100%);
-      min-height: 100vh;
     }
-    .wrap {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
-    }
-    .hero {
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 20px 80px; }
+    .hero, .card {
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: 28px;
-      padding: 36px;
       box-shadow: 0 20px 60px rgba(52, 39, 21, .08);
-      margin-bottom: 28px;
     }
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(47,106,115,.1);
-      color: var(--teal);
-      font-size: 13px;
-      margin-bottom: 14px;
-    }
-    h1 {
-      margin: 0 0 12px;
-      font-size: 42px;
-      line-height: 1.1;
-    }
-    .lead {
-      max-width: 820px;
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 16px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
-    }
-    .card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 16px 40px rgba(52, 39, 21, .07);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 48px rgba(52, 39, 21, .12);
-      border-color: var(--gold);
-    }
+    .hero { padding: 36px; margin-bottom: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { display: block; text-decoration: none; color: inherit; padding: 22px; }
     .tag {
       display: inline-block;
       padding: 4px 10px;
@@ -86,57 +40,36 @@
       background: rgba(160,107,45,.12);
       color: var(--gold);
       font-size: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 26px;
-    }
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-    .footer {
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    h1 { margin: 0 0 10px; font-size: 42px; }
+    h2 { margin: 0 0 8px; font-size: 24px; }
+    p { margin: 0; color: var(--muted); line-height: 1.8; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
-      <div class="eyebrow">Golden Dolphin Divine Records</div>
-      <h1>史记入口</h1>
-      <p class="lead">
-        现有站点已经按“旧金海豚时期”与“新金海豚时期”重新分期。请先看分期总论，再决定进入旧时期案件时间线还是旧时期四人传记。旧时期的主轴是四个核心人物之间的持续冲突；新时期的主轴则是更严苛的群管理制度与普通群友之间的摩擦，这两部分不能混写。
-      </p>
+      <h1>金海豚史记</h1>
+      <p>旧时期：四人冲突。新时期：管理制度冲突。</p>
     </section>
-
     <section class="grid">
       <a class="card" href="period-analysis.html">
-        <div class="tag">Period Analysis</div>
+        <div class="tag">Periods</div>
         <h2>分期总论</h2>
-        <p>先看新旧两个时期的分界线、标志事件、导火索与矛盾主轴切换，再进入具体案卷。这里也明确把新时期案件与旧时期四人案件隔离开。</p>
+        <p>分界线 / 标志事件 / 导火索</p>
       </a>
-
       <a class="card" href="case-timeline.html">
         <div class="tag">Old Period</div>
-        <h2>旧时期案件时间线</h2>
-        <p>按时间线查看旧金海豚时期的核心案卷。这里保留原有四人冲突结构，适合追踪学历、求职、炸队责任、说教姿态与叙事权争夺如何一步步升级。</p>
+        <h2>旧时期案件</h2>
+        <p>主线案：19 / 27 / 38 / 56</p>
       </a>
-
       <a class="card" href="character-biographies.html">
         <div class="tag">Old Period</div>
-        <h2>旧时期四人传记</h2>
-        <p>按人物视角查看裤、麻、程序-策划、Eggnisi 在旧时期中的群内角色、发言风格、关系网络与事件位置。这一页只服务于旧时期，不再拿来解释新时期制度冲突。</p>
+        <h2>四人角色</h2>
+        <p>裤 / 麻 / 程序-策划 / Eggnisi</p>
       </a>
     </section>
-
-    <div class="footer">
-      建议先从“分期总论”进入，再按时期浏览，避免把旧时期四人案件和新时期制度冲突混写。
-    </div>
   </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>旧时期四人传记</title>
+  <title>四人角色</title>
   <style>
     :root {
       --bg: #eff5ef;
@@ -12,7 +12,6 @@
       --muted: #596b5d;
       --line: #c9d8ca;
       --accent: #2f6d4f;
-      --accent-soft: #d8ebe0;
       --accent-2: #8b4d2b;
     }
     * { box-sizing: border-box; }
@@ -20,204 +19,77 @@
       margin: 0;
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(47,109,79,.14), transparent 24%),
-        radial-gradient(circle at top right, rgba(139,77,43,.1), transparent 22%),
-        linear-gradient(180deg, #eff6ef 0%, #e4efe6 100%);
+      background: linear-gradient(180deg, #eff6ef 0%, #e4efe6 100%);
     }
-    .wrap { max-width: 1140px; margin: 0 auto; padding: 32px 20px 80px; }
-    .panel {
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 40px 20px 80px; }
+    .panel, .card {
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 28px;
       box-shadow: 0 16px 40px rgba(21, 44, 25, .08);
-      margin-bottom: 22px;
     }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: 38px; margin-bottom: 10px; }
-    h2 { font-size: 28px; margin-bottom: 14px; }
-    h3 { font-size: 22px; margin-bottom: 10px; }
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(47,109,79,.1);
-      color: var(--accent);
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-    .sub, .panel p, .panel li { color: var(--muted); line-height: 1.8; }
-    .nav {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .nav a {
-      text-decoration: none;
-      color: var(--accent);
-      font-weight: 700;
-    }
-    .intro-grid, .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-    }
-    .intro-card, .stat-card, .person-card {
-      background: #f7fbf6;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-    }
-    .person-card {
-      background: #fffdf9;
-      border-left: 5px solid var(--accent);
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-    .person-card h3 { margin-bottom: 8px; }
-    .meta {
-      color: var(--accent-2);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-    .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .detail-grid div {
-      background: #f7fbf6;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px 14px;
-    }
-    .detail-grid strong {
-      display: block;
-      font-size: 12px;
-      color: var(--accent-2);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .hook {
-      background: #edf6ef;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-top: 12px;
-      color: var(--ink);
-    }
-    @media (max-width: 900px) {
-      h1 { font-size: 30px; }
-    }
+    .panel { padding: 28px; margin-bottom: 20px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+    .card { padding: 20px; border-left: 5px solid var(--accent); }
+    h1 { margin: 0 0 10px; font-size: 38px; }
+    h2 { margin: 0 0 8px; font-size: 22px; }
+    p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .meta { color: var(--accent-2); font-size: 13px; margin-bottom: 8px; }
+    .grid { display: grid; gap: 8px; margin-top: 12px; }
+    .grid div { background: #f7fbf6; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+    .grid strong { display: block; font-size: 12px; color: var(--accent-2); margin-bottom: 4px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+    .nav a { color: var(--accent); text-decoration: none; font-weight: 700; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="panel">
-      <div class="eyebrow">Old Golden Dolphin</div>
-      <h1>旧时期四人传记</h1>
-      <p class="sub">
-        这页不再把四个人写成静态画像，而是写成“冲突功能说明书”。如果你看旧史记总分不清谁在主攻、谁在转述、谁在定义问题、谁在组织舞台，就先读这里。读完之后再回案件页，很多看似混乱的聊天会立刻变得可辨认。
-      </p>
+      <h1>四人角色</h1>
+      <p>裤：转述。麻：猛攻。程序-策划：定义。Eggnisi：组叙事。</p>
       <div class="nav">
-        <a href="index.html">返回首页</a>
-        <a href="period-analysis.html">查看分期总论</a>
-        <a href="case-timeline.html">查看旧时期案件时间线</a>
+        <a href="index.html">首页</a>
+        <a href="period-analysis.html">分期总论</a>
+        <a href="case-timeline.html">旧时期案件</a>
       </div>
     </section>
-
-    <section class="panel">
-      <h2>先记住这四句话</h2>
-      <div class="intro-grid">
-        <article class="intro-card">
-          <strong>裤</strong>
-          <p>高频在场、持续追问、擅长把复杂冲突翻译成全群都能看懂的一句话战报。</p>
-        </article>
-        <article class="intro-card">
-          <strong>麻</strong>
-          <p>低频但爆发极高，一旦下场就喜欢抓住对手最显眼的身份标签猛攻。</p>
-        </article>
-        <article class="intro-card">
-          <strong>程序-策划</strong>
-          <p>喜欢用长段定义和宏大解释争夺话语权，因此最容易被看成“在说教”。</p>
-        </article>
-        <article class="intro-card">
-          <strong>Eggnisi</strong>
-          <p>不只参与争论，还擅长重组叙事、组织围观和把冲突表演化。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>四人冲突功能卡</h2>
-      <div class="cards">
-        <article class="person-card">
-          <div class="badge">裤</div>
-          <h3>战况转述者 / 半拱火半缓冲</h3>
-          <div class="meta">QQ: 1106479930 · 旧时期发言 1545 条</div>
-          <p>裤不是旧时期里最凶的人，但往往是最难绕开的中间接口。很多人第一次读旧史记觉得稀里糊涂，就是因为忽略了裤的作用：他经常不是直接制造最大冲突，而是在冲突发生后迅速把案情翻译成全群能围观的格式。</p>
-          <div class="detail-grid">
-            <div><strong>常见出场方式</strong><span>高频提问、插话、追问、复述“所以现在是在吵什么”。</span></div>
-            <div><strong>典型手法</strong><span>把长段对线压缩成一句“战况摘要”，既方便围观，也会重新定调。</span></div>
-            <div><strong>最常卷入谁</strong><span>Eggnisi 和程序-策划，尤其在大案中常同时在场。</span></div>
-            <div><strong>读者识别点</strong><span>看到有人把复杂冲突讲成一句话、同时又带着一点节目效果，通常就是裤在发挥作用。</span></div>
-          </div>
-          <div class="hook">读案时把裤当成“解说员”会更容易看懂，但要注意：解说员并不等于中立，他的转述本身就在塑造群体理解。</div>
-        </article>
-
-        <article class="person-card">
-          <div class="badge">麻</div>
-          <h3>低频高爆发主攻手</h3>
-          <div class="meta">QQ: 1075750195 · 旧时期发言 199 条</div>
-          <p>麻的发言量不高，但几乎每次真正下场都在推动升级。和裤不同，他不是在帮读者理解案情；和程序-策划不同，他也不想长期解释问题。他更像一个抓住对手最脆弱标签后快速猛攻的人。</p>
-          <div class="detail-grid">
-            <div><strong>常见出场方式</strong><span>点名、短句、直冲对手身份和履历，不太铺垫。</span></div>
-            <div><strong>典型手法</strong><span>抓学历、留学、求职结果、作品含金量等外显标签，迅速把争论拉成人身化对撞。</span></div>
-            <div><strong>最常卷入谁</strong><span>Eggnisi，是旧时期最尖锐的一条正面对撞线。</span></div>
-            <div><strong>读者识别点</strong><span>当争论从“你说得对不对”瞬间跳到“你这个人配不配这么说”，麻通常已经入场。</span></div>
-          </div>
-          <div class="hook">主线案 19 和 27 一定要带着麻的这个功能去看，否则会误以为只是普通争论升级，实际上是攻击方式整个换轨。</div>
-        </article>
-
-        <article class="person-card">
-          <div class="badge">程序-策划</div>
-          <h3>定义问题的人 / 争话语权的人</h3>
-          <div class="meta">QQ: 784633132 · 旧时期发言 581 条</div>
-          <p>程序-策划不是靠一次爆发抢存在感，而是靠长段输出、概念化表达、宏观判断和岗位边界解释不断占据讨论空间。他经常试图重新定义“问题真正是什么”，这让他既显得有理论框架，也显得很容易像在说教。</p>
-          <div class="detail-grid">
-            <div><strong>常见出场方式</strong><span>长段讲解、重构定义、从个别问题上升到原则和结构。</span></div>
-            <div><strong>典型手法</strong><span>不是立刻骂人，而是先把话题改造成“我来解释真正的边界和逻辑”。</span></div>
-            <div><strong>最常卷入谁</strong><span>Eggnisi，后者最擅长把他的定义欲重新包装成笑点和梗。</span></div>
-            <div><strong>读者识别点</strong><span>如果一段对话突然从具体问题变成岗位边界、社会理论、技术原则，程序-策划多半已经接管话题。</span></div>
-          </div>
-          <div class="hook">“成圣学”这个梗之所以能成立，就是因为群体已经把他的表达方式人格化了。读案时不要只看他说了什么，也要看别人怎么把他说话的方式拿来再利用。</div>
-        </article>
-
-        <article class="person-card">
-          <div class="badge">Eggnisi</div>
-          <h3>舞台组织者 / 叙事重组者</h3>
-          <div class="meta">QQ: 3188064505 · 旧时期发言 1167 条</div>
-          <p>Eggnisi 是旧时期里最强的叙事型人物之一。他不只是参与争论，更擅长控制争论的呈现方式：什么时候截个图，什么时候抛个卡片消息，什么时候把问题从“你是不是跑路”改成“策划是否失责并造谣”，这都是他在组织舞台。</p>
-          <div class="detail-grid">
-            <div><strong>常见出场方式</strong><span>截图、反问、角色化语言、公开喊话、把旧账重新搬上台。</span></div>
-            <div><strong>典型手法</strong><span>不只反击，还会重组议题，把对自己不利的问题改写成另一个更适合自己发挥的战场。</span></div>
-            <div><strong>最常卷入谁</strong><span>麻和程序-策划，一条是身份对撞线，一条是风格对撞线。</span></div>
-            <div><strong>读者识别点</strong><span>如果你发现争论开始像“表演给围观者看”，多半已经进入 Eggnisi 的节奏。</span></div>
-          </div>
-          <div class="hook">读旧史记时，Eggnisi 不是“单纯当事人”，更像“当事人兼导演”。很多案子真正的转折点，不在最响的骂句，而在他把议题改写的那一刻。</div>
-        </article>
-      </div>
+    <section class="cards">
+      <article class="card">
+        <div class="meta">裤 · 1106479930 · 1545 条</div>
+        <h2>战况转述者</h2>
+        <div class="grid">
+          <div><strong>动作</strong><span>提问 / 追问 / 复述</span></div>
+          <div><strong>作用</strong><span>把长对线翻成一句战报</span></div>
+          <div><strong>常同场</strong><span>Eggnisi / 程序-策划</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="meta">麻 · 1075750195 · 199 条</div>
+        <h2>低频高爆发主攻手</h2>
+        <div class="grid">
+          <div><strong>动作</strong><span>点名 / 短句 / 猛攻</span></div>
+          <div><strong>作用</strong><span>把争论拉成人身化对撞</span></div>
+          <div><strong>常同场</strong><span>Eggnisi</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="meta">程序-策划 · 784633132 · 581 条</div>
+        <h2>定义问题的人</h2>
+        <div class="grid">
+          <div><strong>动作</strong><span>长段讲解 / 重构定义</span></div>
+          <div><strong>作用</strong><span>争夺话语权与解释权</span></div>
+          <div><strong>常同场</strong><span>Eggnisi / 裤</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="meta">Eggnisi · 3188064505 · 1167 条</div>
+        <h2>舞台组织者</h2>
+        <div class="grid">
+          <div><strong>动作</strong><span>截图 / 反问 / 重写议题</span></div>
+          <div><strong>作用</strong><span>组织围观并重组叙事</span></div>
+          <div><strong>常同场</strong><span>麻 / 程序-策划 / 裤</span></div>
+        </div>
+      </article>
     </section>
   </div>
 </body>

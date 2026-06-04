@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>旧金海豚案件时间线</title>
+  <title>旧时期案件</title>
   <style>
     :root {
       --bg: #f5f0e6;
@@ -12,346 +12,91 @@
       --muted: #62584f;
       --line: #d8c8b5;
       --accent: #9c4d2f;
-      --accent-soft: #f0ddd3;
-      --accent-2: #335e66;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top right, rgba(156,77,47,.14), transparent 26%),
-        radial-gradient(circle at top left, rgba(51,94,102,.12), transparent 24%),
-        linear-gradient(180deg, #f7f1e8 0%, #ece2d2 100%);
+      background: linear-gradient(180deg, #f7f1e8 0%, #ece2d2 100%);
     }
-    a { color: var(--accent-2); }
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
-    .panel {
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 40px 20px 80px; }
+    .panel, .case {
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 28px;
+      border-radius: 24px;
       box-shadow: 0 18px 50px rgba(76, 45, 25, .08);
-      margin-bottom: 22px;
     }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: 38px; margin-bottom: 10px; }
-    h2 { font-size: 28px; margin-bottom: 14px; }
-    h3 { font-size: 22px; margin-bottom: 10px; }
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(156,77,47,.1);
-      color: var(--accent);
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-    .sub, .panel p, .panel li { color: var(--muted); line-height: 1.8; }
-    .nav {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .nav a {
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-    }
-    .info-card, .term-card, .archive-card, .case-card {
-      background: #fcf8f1;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 18px;
-    }
-    .info-card strong, .term-card strong, .archive-card strong {
-      color: var(--ink);
-    }
-    .reading-path {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-    .path-step {
-      background: #fffdf8;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-    }
-    .path-step .num {
-      display: inline-block;
-      min-width: 28px;
-      height: 28px;
-      line-height: 28px;
-      text-align: center;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .mainline {
-      display: grid;
-      gap: 18px;
-    }
-    .case-card {
-      border-left: 5px solid var(--accent);
-    }
-    .case-meta {
-      color: var(--accent);
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin: 14px 0;
-    }
-    .summary-grid div {
-      background: #fffdf8;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px 14px;
-    }
-    .summary-grid strong {
-      display: block;
-      font-size: 12px;
-      color: var(--accent-2);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .quote-list {
-      list-style: none;
-      padding: 0;
-      margin: 12px 0 0;
-      display: grid;
-      gap: 10px;
-    }
-    .quote-list li {
-      border: 1px dashed var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fffdf8;
-      line-height: 1.7;
-    }
-    .quote-time {
-      color: var(--accent);
-      font-size: 12px;
-      margin-right: 8px;
-    }
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-    }
-    @media (max-width: 900px) {
-      h1 { font-size: 30px; }
-    }
+    .panel { padding: 28px; margin-bottom: 20px; }
+    .list { display: grid; gap: 16px; }
+    .case { padding: 20px; border-left: 5px solid var(--accent); }
+    h1 { margin: 0 0 10px; font-size: 38px; }
+    h2 { margin: 0 0 8px; font-size: 22px; }
+    p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .meta { color: var(--accent); font-size: 13px; margin-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
+    .grid div { background: #fffdf8; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+    .grid strong { display: block; font-size: 12px; color: var(--accent); margin-bottom: 5px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+    .nav a { color: var(--accent); text-decoration: none; font-weight: 700; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="panel">
-      <div class="eyebrow">Old Golden Dolphin</div>
-      <h1>旧金海豚案件时间线</h1>
-      <p class="sub">
-        这页不再把旧史记当成“聊天摘录仓库”，而是先告诉你该怎么看。旧时期的核心矛盾不是群规，也不是普通闲聊，而是裤、麻、程序-策划、Eggnisi 四个人围绕学历、项目责任、说教姿态、技术权威和叙事权展开的持续冲突。读这页时，先抓“谁跟谁打、为什么升级、围观者怎么定调、后果留下了什么标签”，不要先陷在原始聊天里。
-      </p>
+      <h1>旧时期案件</h1>
+      <p>主线：19 / 27 / 38 / 56</p>
       <div class="nav">
-        <a href="index.html">返回首页</a>
-        <a href="period-analysis.html">查看分期总论</a>
-        <a href="character-biographies.html">先认四个人</a>
+        <a href="index.html">首页</a>
+        <a href="period-analysis.html">分期总论</a>
+        <a href="character-biographies.html">四人角色</a>
       </div>
     </section>
-
-    <section class="panel">
-      <h2>一屏读懂</h2>
-      <div class="grid">
-        <article class="info-card">
-          <strong>旧时期主线</strong>
-          <p>从项目协作和职业判断的讨论，逐步升级为围绕学历、留学、作品、群外履历、炸队责任和“谁更像在装”的反复对撞。</p>
-        </article>
-        <article class="info-card">
-          <strong>真正的冲突主体</strong>
-          <p>核心不是“全群互撕”，而是四人矛盾簇。围观群众的主要作用是转述、拱火、补截图、把案件梗化。</p>
-        </article>
-        <article class="info-card">
-          <strong>最重要的阅读抓手</strong>
-          <p>优先看主线案 19、27、38、56。它们分别对应关系结构定型、人身化升级、风格对撞定型、责任案卷化。</p>
-        </article>
-        <article class="info-card">
-          <strong>读完要知道什么</strong>
-          <p>谁在主攻、谁在防守、谁在转述战况，以及每一案给后面的冲突固定了什么新标签。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>推荐阅读路径</h2>
-      <div class="reading-path">
-        <article class="path-step">
-          <div class="num">1</div>
-          <h3>先认角色</h3>
-          <p>如果你第一次看，先去人物页认识四人的冲突功能，再回来读案件，不然很容易分不清谁在推进、谁在定调。</p>
-        </article>
-        <article class="path-step">
-          <div class="num">2</div>
-          <h3>只看主线案</h3>
-          <p>优先看 19、27、38、56。它们能最清楚地解释旧时期为什么会从争论走向宿怨。</p>
-        </article>
-        <article class="path-step">
-          <div class="num">3</div>
-          <h3>再补支线案</h3>
-          <p>读 28、34、55 这类复盘案和续战案，理解群体记忆是怎么被制造出来的。</p>
-        </article>
-        <article class="path-step">
-          <div class="num">4</div>
-          <h3>最后看案目索引</h3>
-          <p>剩余案件更多是主线的延伸、预热或余波，不必一开始逐条硬啃。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>术语表</h2>
-      <div class="grid">
-        <article class="term-card">
-          <strong>炸队 / 跑路</strong>
-          <p>指项目组中途失序、散伙或被指责中途退出。旧时期后半段，“谁该为炸队负责”是冲突升级的重要引线。</p>
-        </article>
-        <article class="term-card">
-          <strong>成圣学</strong>
-          <p>对程序-策划那种长段定义、宏大解释、像在建立理论权威的说话方式的梗化命名。</p>
-        </article>
-        <article class="term-card">
-          <strong>复活</strong>
-          <p>Eggnisi 重新回场并主动把自己放回注意力中心，不是简单回来聊天，而是把旧案重新带回舞台。</p>
-        </article>
-        <article class="term-card">
-          <strong>战况转述</strong>
-          <p>围观者把复杂对线压缩成一句简报，例如裤常做的“所以现在是在吵谁造谣谁跑路”。这会直接影响群体理解。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>主线案件</h2>
-      <div class="mainline">
-        <article class="case-card" id="case-19">
-          <div class="case-meta">2026-05-24 · 主线案 19 · 关系结构定型</div>
-          <h3>留学身份、说教姿态与公开对线升级案</h3>
-          <div class="summary-grid">
-            <div><strong>起因</strong><span>原本围绕美术协作、AI 写代码和项目分工的讨论，逐渐引向“谁站在高位说教”。</span></div>
-            <div><strong>升级点</strong><span>麻开始把矛盾从话题分歧拉向身份姿态判断，四人随后全部卷入。</span></div>
-            <div><strong>双方主张</strong><span>麻反感高位说教和身份压人；裤持续追问协作与分工；Eggnisi 与程序-策划把争论推向更公开的人格与立场判断。</span></div>
-            <div><strong>结果 / 余波</strong><span>“留学身份”“说教姿态”“是否高高在上”被固定成后续多案反复调用的标签。</span></div>
-          </div>
-          <div class="summary-grid">
-            <div><strong>主对线</strong><span>麻 vs 说教型发言者，随后卷成四人场。</span></div>
-            <div><strong>转述者</strong><span>裤负责不断提问、接话和把复杂内容翻成可围观的短句。</span></div>
-            <div><strong>围观作用</strong><span>围观者不仅没让争论冷却，反而通过“还有下集吗”式反应把它推成节目。</span></div>
-            <div><strong>案后影响</strong><span>旧时期第一次明显形成长期敌意结构，后续几乎所有大案都能回响到这里。</span></div>
-          </div>
-          <ul class="quote-list">
-            <li><span class="quote-time">导火索</span><strong>裤：</strong>连续追问“为什么美术不能参与多个项目”“AI 写代码这块”。</li>
-            <li><span class="quote-time">升级</span><strong>麻：</strong>把矛盾从技术问题拉向“有人站在高位说教、拿身份压人”。</li>
-            <li><span class="quote-time">定调</span><strong>围观群友：</strong>“你从前面开始看”“还有下集”，说明围观本身已经成为事件的一部分。</li>
-          </ul>
-        </article>
-
-        <article class="case-card" id="case-27">
-          <div class="case-meta">2026-05-26 · 主线案 27 · 人身化升级</div>
-          <h3>学历真伪、求职结果与作品含金量对撞案</h3>
-          <div class="summary-grid">
-            <div><strong>起因</strong><span>麻直接点名 Eggnisi，质疑其学校、学历叙事和群外行为。</span></div>
-            <div><strong>升级点</strong><span>争论不再停留在态度和风格，而是直接把履历、学校、作品、求职结果拉上台面。</span></div>
-            <div><strong>双方主张</strong><span>麻主张对方靠学历包装、被戳破后急于防守；Eggnisi 反击麻“高学历海归却求职不顺”，并用截图和反问抢回节奏。</span></div>
-            <div><strong>结果 / 余波</strong><span>这是旧时期最典型的人身化案件，之后一提到学历、留学、群外装逼，都会回到这场对撞。</span></div>
-          </div>
-          <div class="summary-grid">
-            <div><strong>主对线</strong><span>麻 vs Eggnisi。</span></div>
-            <div><strong>转述者</strong><span>裤负责战况播报和公共复述，扩大了群体观众面。</span></div>
-            <div><strong>围观作用</strong><span>围观者在找截图、问前情、讨论谁拉黑谁，进一步把个体争吵变成公演。</span></div>
-            <div><strong>案后影响</strong><span>旧时期从“争论谁更对”转入“谁更值得被羞辱”的危险阶段。</span></div>
-          </div>
-          <ul class="quote-list">
-            <li><span class="quote-time">导火索</span><strong>麻：</strong>公开点名 Eggnisi，质疑其学校与学历叙述。</li>
-            <li><span class="quote-time">升级</span><strong>Eggnisi：</strong>不只辩解，而是反打对方求职与能力，争论彻底变成人身化对撞。</li>
-            <li><span class="quote-time">定调</span><strong>裤：</strong>把案件转述成“刚刚蛋哥和麻哥打起来了不是”，说明这场冲突已经被群体当成节目。</li>
-          </ul>
-        </article>
-
-        <article class="case-card" id="case-38">
-          <div class="case-meta">2026-05-27 · 主线案 38 · 风格对撞定型</div>
-          <h3>“成圣学”、造谣指控与公开辩经案</h3>
-          <div class="summary-grid">
-            <div><strong>起因</strong><span>Eggnisi 主动翻旧账，把程序-策划过去的长段理论和重构表达重新拿出来当笑点展示。</span></div>
-            <div><strong>升级点</strong><span>程序-策划把这视为造谣、背后说坏话，要求正面公开辩清。</span></div>
-            <div><strong>双方主张</strong><span>Eggnisi 认为程序-策划的表达犬儒、悬浮、像“成圣学”；程序-策划则要求对方停止梗化和歪曲。</span></div>
-            <div><strong>结果 / 余波</strong><span>程序-策划此后不再只是“喜欢长段输出的人”，而被固定进“成圣学”框架里，表达一出现就会被梗化。</span></div>
-          </div>
-          <div class="summary-grid">
-            <div><strong>主对线</strong><span>Eggnisi vs 程序-策划。</span></div>
-            <div><strong>转述者</strong><span>裤在其中更多是递梗和追问，没有真正降温。</span></div>
-            <div><strong>围观作用</strong><span>围观者大量依靠截图和卡片消息理解案情，群体不是背景，而是舞台。</span></div>
-            <div><strong>案后影响</strong><span>旧时期最典型的“风格人格化”案件，为后续一切嘲讽型再利用打了底。</span></div>
-          </div>
-          <ul class="quote-list">
-            <li><span class="quote-time">导火索</span><strong>Eggnisi：</strong>主动翻出旧表达并公开展示，等于宣布要把旧债再开一轮。</li>
-            <li><span class="quote-time">升级</span><strong>程序-策划：</strong>指控对方造谣、只会背后坏笑，要求公开辩清所谓“成圣学”。</li>
-            <li><span class="quote-time">定调</span><strong>群体：</strong>不断追问“发生什么了”，靠截图和摘录消费这场风格对撞。</li>
-          </ul>
-        </article>
-
-        <article class="case-card" id="case-56">
-          <div class="case-meta">2026-05-30 · 主线案 56 · 责任案卷化</div>
-          <h3>炸队责任、跑路指控与叙事权争夺案</h3>
-          <div class="summary-grid">
-            <div><strong>起因</strong><span>旧项目散伙/失序的故事再次被提起，裤先把它预告成“还有下集”。</span></div>
-            <div><strong>升级点</strong><span>争论焦点从“你是不是跑路”变成“到底谁失责、谁在造谣、谁有证据”。</span></div>
-            <div><strong>双方主张</strong><span>Eggnisi 坚称自己不是跑路，而是在失去信心后做了整理、写了工作报告再退出；反方则延续“队炸了各执一词”的旧叙事。</span></div>
-            <div><strong>结果 / 余波</strong><span>这是旧时期最接近正式案卷的一案，责任、证据、口供和围观摘要全部到位，也直接逼近了后来的分界线。</span></div>
-          </div>
-          <div class="summary-grid">
-            <div><strong>主对线</strong><span>Eggnisi vs “策划失责/谁跑路”这一套群体叙事。</span></div>
-            <div><strong>转述者</strong><span>裤不断把复杂战况简化成一句摘要，让围观者能迅速站到某个版本上。</span></div>
-            <div><strong>围观作用</strong><span>围观者最关心的是“给我一个简化版故事”，于是双方都在争夺解释权，而不只是争事实。</span></div>
-            <div><strong>案后影响</strong><span>旧时期的人物恩怨在这里几乎已经碰到管理阈值，新时期的制度冲突就是从这种压力中长出来的。</span></div>
-          </div>
-          <ul class="quote-list">
-            <li><span class="quote-time">导火索</span><strong>裤：</strong>先把案件包装成“还有下集”，说明它在群体中早已具备连续剧性质。</li>
-            <li><span class="quote-time">升级</span><strong>Eggnisi：</strong>把议题重组为“策划是否失责并造谣”，而不是被动承受“跑路”标签。</li>
-            <li><span class="quote-time">定调</span><strong>围观群友：</strong>反复索要一句话总结，推动双方争叙事而不只是争事实。</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>支线与余波案目</h2>
-      <div class="archive-grid">
-        <article class="archive-card">
-          <strong>预热案</strong>
-          <p>5、7、15：从组队、学历、岗位和项目讨论中，逐渐长出谁更有资格发言的底层张力。</p>
-        </article>
-        <article class="archive-card">
-          <strong>节奏案</strong>
-          <p>21、22、23、24、26、30、31、34、36、37、40：更多是在强化既有印象，例如谁像在说教、谁爱插话、谁喜欢抢定义权。</p>
-        </article>
-        <article class="archive-card">
-          <strong>复盘案</strong>
-          <p>28、39、43、44、55、57、58、62：并非每次都比主线案更激烈，但它们负责把旧案变成群体记忆、角色梗和固定标签。</p>
-        </article>
-      </div>
+    <section class="list">
+      <article class="case">
+        <div class="meta">案件 19 · 2026-05-24 · 关系定型</div>
+        <h2>留学身份与说教姿态升级</h2>
+        <div class="grid">
+          <div><strong>起因</strong><span>分工与协作讨论</span></div>
+          <div><strong>升级点</strong><span>从话题争论转成身份姿态争论</span></div>
+          <div><strong>主对线</strong><span>麻 vs 说教型发言者</span></div>
+          <div><strong>余波</strong><span>“高位说教”标签固定</span></div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="meta">案件 27 · 2026-05-26 · 人身化升级</div>
+        <h2>学历真伪、求职结果与作品含金量</h2>
+        <div class="grid">
+          <div><strong>起因</strong><span>麻直接点名 Eggnisi</span></div>
+          <div><strong>升级点</strong><span>履历、学校、作品全部上桌</span></div>
+          <div><strong>主对线</strong><span>麻 vs Eggnisi</span></div>
+          <div><strong>余波</strong><span>学历与装逼标签固定</span></div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="meta">案件 38 · 2026-05-27 · 风格定型</div>
+        <h2>“成圣学”与造谣指控</h2>
+        <div class="grid">
+          <div><strong>起因</strong><span>Eggnisi 翻旧账公开展示</span></div>
+          <div><strong>升级点</strong><span>程序-策划要求公开辩清</span></div>
+          <div><strong>主对线</strong><span>Eggnisi vs 程序-策划</span></div>
+          <div><strong>余波</strong><span>“成圣学”框架定型</span></div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="meta">案件 56 · 2026-05-30 · 责任案卷化</div>
+        <h2>炸队责任与跑路指控</h2>
+        <div class="grid">
+          <div><strong>起因</strong><span>旧项目散伙被再次提起</span></div>
+          <div><strong>升级点</strong><span>从“跑路”转成“谁失责谁造谣”</span></div>
+          <div><strong>主对线</strong><span>Eggnisi vs 旧叙事</span></div>
+          <div><strong>余波</strong><span>逼近新时期分界线</span></div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="meta">支线案</div>
+        <h2>5 / 7 / 15 / 21 / 22 / 23 / 24 / 26 / 28 / 30 / 31 / 34 / 36 / 37 / 39 / 40 / 43 / 44 / 47 / 55 / 57 / 58 / 62</h2>
+      </article>
     </section>
   </div>
 </body>
