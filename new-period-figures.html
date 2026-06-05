@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新金海豚时期活跃人物</title>
+  <style>
+    :root {
+      --paper: rgba(252, 254, 253, 0.96);
+      --ink: #17211d;
+      --muted: #5d6a64;
+      --line: #c8d6d0;
+      --accent: #2d6c57;
+      --accent-2: #9a5b2d;
+      --soft: #f5faf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(45, 108, 87, 0.14), transparent 26%),
+        radial-gradient(circle at 88% 8%, rgba(154, 91, 45, 0.14), transparent 22%),
+        linear-gradient(180deg, #f1f6f4 0%, #e5ece8 100%);
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 20px 80px; }
+    .panel, .card, .case {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 18px 48px rgba(22, 37, 31, 0.08);
+    }
+    .panel { padding: 30px; margin-bottom: 20px; }
+    .hero h1 { margin: 0 0 10px; font-size: 40px; }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.9; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+    .nav a { color: var(--accent); text-decoration: none; font-weight: 700; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card { padding: 18px; background: var(--soft); }
+    .card h3, .section-title { margin: 0 0 8px; color: var(--accent); }
+    .card p, .case p, .case li, .panel li { margin: 0; color: var(--muted); line-height: 1.85; }
+    .section-title { font-size: 24px; margin-bottom: 14px; }
+    .meta {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(45, 108, 87, 0.12);
+      color: var(--accent);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .cases { display: grid; gap: 16px; }
+    .case { padding: 22px; }
+    .case h3 { margin: 0 0 10px; font-size: 21px; color: var(--accent-2); }
+    .case ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); }
+    .quote {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f7faf9;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+    .dialogue {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #fbfcfb;
+      border: 1px solid var(--line);
+    }
+    .dialogue p {
+      margin: 0 0 8px;
+      color: var(--ink);
+      line-height: 1.8;
+    }
+    .dialogue p:last-child { margin-bottom: 0; }
+    .speaker {
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel hero">
+      <h1>新金海豚时期活跃人物</h1>
+      <p>这一页不沿用旧时期“四人角色”的脸谱写法，而是先筛出单人的聊天与关联聊天，再做结构分析。当前先收录 Maxy，重点看他如何定性技术问题、如何处理追问，以及他怎样在“经验权威”和“群聊气氛”之间切换。</p>
+      <div class="nav">
+        <a href="index.html">首页</a>
+        <a href="period-analysis.html">分期总论</a>
+        <a href="character-biographies.html">旧时期四人角色</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="meta">人物志 / Maxy</div>
+      <h2 class="section-title">Maxy：先占判断位，再决定解释到什么程度的人</h2>
+      <p>从筛选后的聊天材料看，Maxy 的稳定特征不是单纯“务实”，也不是单纯“爱抬杠”。他更像一种结论先行型技术判断者：习惯先快速下定义、给边界、做能力分层；只要觉得对方是在接收建议，他会继续说；一旦感觉对方在持续盘问自己、或者把他拖进低收益沟通，他就容易缩短解释、抬高门槛，甚至转成带情绪的回应。</p>
+
+      <div class="summary">
+        <article class="card">
+          <h3>发言方式</h3>
+          <p>短句、先定性、先给结论，再看值不值得继续展开。</p>
+        </article>
+        <article class="card">
+          <h3>权威来源</h3>
+          <p>主要依赖做过、见过、合作过的经验片段，不靠长篇理论推演。</p>
+        </article>
+        <article class="card">
+          <h3>价值排序</h3>
+          <p>优先看效率、沟通成本、产出速度和落地可控性。</p>
+        </article>
+        <article class="card">
+          <h3>隐藏风险</h3>
+          <p>他经常把技术追问理解成对判断资格的追问，因此容易防御。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">精确案例分析</h2>
+      <div class="cases">
+        <article class="case">
+          <h3>案例一：ACT 状态管理讨论中的追问耐受度</h3>
+          <p>这是目前最能直接说明 Maxy “不喜欢被技术追问”的一段。前半段他本来在正常介绍自己的状态机做法，讲得很具体；但当别人开始往调试、权限、黑板模式这些方向深挖时，他很快就不再顺着技术问题展开，而是把讨论压回“这只是少量代码，不值得那样追”的立场。</p>
+          <div class="quote">
+            这段最关键的不是他有没有方案，而是他对追问的反应方式。只要话题还停留在“我怎么实现”，他可以讲；一旦别人开始往“为什么这样设计、后面怎么调试、读写权限怎么控”推进，他就会明显把问题缩回“没必要”。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">Maxy</span>每个片段状态可以选择下一个可以进入的连段状态。</p>
+            <p><span class="speaker">Maxy</span>现在是硬编码方式，后面有时间做成可视化配置的方案。</p>
+            <p><span class="speaker">Maxy</span>做成组装式技能连段。</p>
+            <p><span class="speaker">Maxy</span>状态有状态基类，状态机管理状态实例，每次切换是切换状态实例，不会重新创建。</p>
+            <p><span class="speaker">Maxy</span>状态基类存储状态机中的上下文参数对象。</p>
+            <p><span class="speaker">Maxy</span>状态机内部存储上下文参数对象。</p>
+            <p><span class="speaker">Maxy</span>状态之间的互动用上下文参数管理。</p>
+            <p><span class="speaker">Maxy</span>现在状态是有继承链的，比如普攻状态继承地面状态，空击状态继承空中状态。</p>
+            <p><span class="speaker">群友</span>那么问题来了，目前状态切换是依赖整个状态机的上下文参数，对吧，这其实是一个黑板的思维。</p>
+            <p><span class="speaker">Maxy</span>你要追踪读写目标干嘛。</p>
+            <p><span class="speaker">群友</span>追踪读写目标是调试的最重要方向之一。</p>
+            <p><span class="speaker">Maxy</span>那你这个调试在我写一个 ACT 代码试一试的情况有啥作用吗，本来就是少量代码，不需要调试。</p>
+            <p><span class="speaker">Maxy</span>因为这不是实战项目。</p>
+            <p><span class="speaker">Maxy</span>进入状态不是状态控制的，状态只是调用。</p>
+          </div>
+          <ul>
+            <li>前半段他是愿意讲方案的，而且讲得并不空泛，说明他不是不会聊技术。</li>
+            <li>转折点出现在别人开始往可维护性、调试、访问边界这些方向追问时。</li>
+            <li>他的反应不是继续论证，而是缩回“只是试一试”“不是实战项目”“不需要调试”。</li>
+            <li>这很好地说明了他的隐藏特征：他能接受展示方案，但不太接受别人持续拆解他的方案。</li>
+          </ul>
+        </article>
+
+        <article class="case">
+          <h3>案例二：PSB / PNG 讨论中的回避式定性</h3>
+          <p>这段是你点到的另一类典型场景。Maxy 先用“连 psb 都不知道”把问题直接上升成从业基础判断，然后继续强调自己每次都得重复解释 “PSB 比 PNG 好”。但真正到“好在哪”这一步时，现场并没有展开为可核验的技术说明，反而停留在定性与资历判断上。</p>
+          <div class="quote">
+            这里最有意思的不是他说了 PSB，而是他说法的结构：先判“你怎么连这个都不知道”，再判“所以我还得重新解释”。也就是说，他先占据了高位判断，再把解释义务往后推。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">Maxy</span>我目前为止遇到的所有美术也是类似的。</p>
+            <p><span class="speaker">Maxy</span>都对游戏设计完全不懂的。</p>
+            <p><span class="speaker">Maxy</span>甚至连 psb 都不知道的。</p>
+            <p><span class="speaker">Maxy</span>所以我现在每次遇到新的美术。</p>
+            <p><span class="speaker">Maxy</span>都会提一嘴：如果要做 UI，记得直接发我 PSB 文件。</p>
+            <p><span class="speaker">群友</span>这么大吗，都是 PSB 了。</p>
+            <p><span class="speaker">裤</span>美术的学习流程很多情况下不包括游戏落地。</p>
+            <p><span class="speaker">Maxy</span>然后每次都要再重新解释一遍 PSB 比 PNG 好的好处。</p>
+            <p><span class="speaker">群友</span>我不信。</p>
+          </div>
+          <ul>
+            <li>他先把问题做成“基础门槛判断”，而不是直接进入技术比较。</li>
+            <li>随后虽然声称自己总要解释一遍好处，但现场并没有顺势给出完整技术论证。</li>
+            <li>这类发言体现出的不是沉默，而是停留在“判断已经给出，解释不必继续展开”的层面。</li>
+            <li>它和状态管理讨论刚好互证，说明他的不耐受不是个别情绪，而是稳定结构。</li>
+          </ul>
+        </article>
+
+        <article class="case">
+          <h3>案例三：解耦讨论中的定义权争夺</h3>
+          <p>这段不是单纯的概念科普，而是 Maxy 主动占据定义权的典型动作。他先把“懂解耦”抬成能力门槛，随后再给出自己认可的说法与工作流。</p>
+          <div class="quote">
+            他先说“能懂解耦的程序就赢一半了”，这不是解释，而是先划门槛。等别人顺着问“解耦是什么”，他才开始给出自己的实践性定义，并纠正别人把“拆文件”当成解耦的说法。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">隽</span>说实话，能力强的程序太少了。</p>
+            <p><span class="speaker">Maxy</span>能懂解耦的程序就赢 50% 了。</p>
+            <p><span class="speaker">裤</span>解耦是什么。</p>
+            <p><span class="speaker">Maxy</span>分离。</p>
+            <p><span class="speaker">隽</span>解耦，就是减少程序模块直接关联，方便后期维护。</p>
+            <p><span class="speaker">裤</span>我让 AI 拆脚本。</p>
+            <p><span class="speaker">Maxy</span>这不叫解耦。</p>
+            <p><span class="speaker">Maxy</span>这顶多叫分离关注点。</p>
+            <p><span class="speaker">Maxy</span>解耦不是拆分文件。</p>
+            <p><span class="speaker">Maxy</span>做独游的，能搞个事件中心，能搞个服务中心就很不错了。</p>
+            <p><span class="speaker">Maxy</span>对于小游戏，注入、统一接口这些都不是非常刚需的。</p>
+            <p><span class="speaker">Maxy</span>很多人的做法是写一个单独的 bootstrap 场景。</p>
+            <p><span class="speaker">裤</span>听不懂但这东西好像 GPT 大人帮我弄了个。</p>
+            <p><span class="speaker">Maxy</span>是这个捏。</p>
+            <p><span class="speaker">Maxy</span>这玩意不难，你学会之后可以做全局功能类单例的管理器。</p>
+          </div>
+          <ul>
+            <li>第一步是先定级，第二步才是解释，这个顺序很关键。</li>
+            <li>他的解释不是学院派定义，而是事件中心、服务中心、单例管理器这类经验模板。</li>
+            <li>这说明他更擅长把概念转成工作流，不太愿意把概念本身讲成完整理论。</li>
+            <li>同时也能看出，他很在意“这东西该怎么叫”这件事，本质上是在争裁决权。</li>
+          </ul>
+        </article>
+
+        <article class="case">
+          <h3>案例四：提前写代码与“预制菜”争论</h3>
+          <p>这段同样能说明 Maxy 对追问的处理方式。讨论本来围绕比赛前能否提前准备工作流、底层框架、方向预设。Maxy 没有把规则边界一条条拆开，而是很快把讨论抬到理解层级上。</p>
+          <div class="quote">
+            他不是顺着“能不能提前写、提前写到哪一步”继续细答，而是把问题改写成“你先理解引擎、脚本和框架的关系”。这是一种典型的转向动作：把具体追问上提成认知门槛。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">Inori</span>那咋办。</p>
+            <p><span class="speaker">Inori</span>比赛开始用 C++ 先实现物理引擎吗。</p>
+            <p><span class="speaker">Inori</span>现成的图形库也是预制菜。</p>
+            <p><span class="speaker">群友</span>招募帖子里也有好多，打算做 2d、3d、avg、act 啥的。</p>
+            <p><span class="speaker">群友</span>提前决定好制作方向然后定下来工作流这种算偷跑吗。</p>
+            <p><span class="speaker">Maxy</span>撞到我的领域了。</p>
+            <p><span class="speaker">Maxy</span>我要化身编程嘉豪了。</p>
+            <p><span class="speaker">Maxy</span>我之前做一个机器人游戏，搞了个内置的自制脚本语言。</p>
+            <p><span class="speaker">Maxy</span>有个美术老外觉得我做得反人类，我就换成图形化编程了。</p>
+          </div>
+          <ul>
+            <li>他没有沿着裁判标准继续细讲，而是先把自己放到“我懂这一块”的位置上。</li>
+            <li>随后给出的不是抽象原则，而是自己的经验切片。</li>
+            <li>这说明他更愿意用实战经历压住讨论，而不是把判断逻辑公开到可逐项复核的程度。</li>
+            <li>一旦别人继续追问，他就容易觉得这不是在接建议，而是在审问自己。</li>
+          </ul>
+        </article>
+
+        <article class="case">
+          <h3>案例五：RGB 讨论里的能力分层</h3>
+          <p>这组材料能看出 Maxy 很容易把技术常识讨论转成能力分层。表面上是在说 RGB 常识，实际上是在划线：什么算基础，什么又意味着“没进过这一行”。</p>
+          <div class="quote">
+            在这里，他不是只纠正知识点，而是把知识点直接连到从业门槛。这样一来，讨论就不再只是“对不对”，而变成“你够不够格”。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">Maxy</span>美术不懂 RGB 的话。</p>
+            <p><span class="speaker">Maxy</span>确实有点逆天。</p>
+            <p><span class="speaker">Inori</span>用 PS 怎么会说出不知道 RGB。</p>
+            <p><span class="speaker">群友</span>不学 RGB，那怕不是学油画的。</p>
+            <p><span class="speaker">裤</span>我不需要靠 RGB 调整相关内容，我只需要在色盘里选就行了。</p>
+            <p><span class="speaker">群友</span>意思就是不会 RGB，那只能说没学过电绘了。</p>
+            <p><span class="speaker">裤</span>但问题是，这就是游戏美术原画从业的内容，而不是什么考引擎和 RGB 内容。</p>
+            <p><span class="speaker">Maxy</span>虽然但是，调色盘需要有颜色原理基础，颜色原理基础都是会提到红绿蓝这些 RGB 的。</p>
+          </div>
+          <ul>
+            <li>他不是只在纠正一个知识点，而是在把它直接连到“基础是否过关”。</li>
+            <li>这种说法会天然让对方感到自己被判了水平层级，讨论也更容易转成防御。</li>
+            <li>这正好对应他的一项隐藏特征：技术判断和能力判断在他那里经常是绑在一起的。</li>
+            <li>所以别人继续追问他时，不只是在碰他的观点，也是在碰他的判断资格。</li>
+          </ul>
+        </article>
+
+        <article class="case">
+          <h3>案例六：AI 讨论中的“水平优先”判断</h3>
+          <p>这段比一般的工具偏好更深，因为 Maxy 在这里把 AI 的效果几乎完全还原成使用者水平问题。他没有把 AI 讲成中性工具，而是直接变成一面照水平的镜子。</p>
+          <div class="quote">
+            这段最典型的地方在于：他一边承认 AI 有用，一边又迅速把有效与无效都收束到“你本人什么水平”。这能很好解释他为什么总把工具讨论转成能力判断。
+          </div>
+          <div class="dialogue">
+            <p><span class="speaker">Maxy</span>AI 就是很矛盾的东西。</p>
+            <p><span class="speaker">Maxy</span>你水平差用 AI 大概率也是差的效果。</p>
+            <p><span class="speaker">Maxy</span>你水平高用 AI 也很好。</p>
+            <p><span class="speaker">Maxy</span>但是你水平高就很少需要用到 AI。</p>
+            <p><span class="speaker">Maxy</span>我现在对 AI 就是当作搜索引擎用，代码依然是自己写，除非是实在不会的领域，让 AI 写一份代码，我稍微改改用上去。</p>
+            <p><span class="speaker">Maxy</span>毕竟我不清楚的领域，AI 写的代码大概率有问题我也看不出来。</p>
+            <p><span class="speaker">群友</span>还是看 harness。</p>
+            <p><span class="speaker">群友</span>harness 做得好就是省心。</p>
+          </div>
+          <ul>
+            <li>他讨论 AI 时，核心不是模型、框架或工程化手段，而是人的判断力够不够。</li>
+            <li>这说明在他那里，工具从来不是独立变量，最终还是要回到使用者本人的能力层级。</li>
+            <li>即便别人补充了 harness 视角，他的原始重心依然是“你看不看得出 AI 在胡来”。</li>
+            <li>这和他在 RGB、解耦里的表现是一致的：技术问题最终都会被他折回到人本身。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">共通机制</h2>
+      <p>把六个案例并排看，Maxy 的发言并不是随机起伏，而是反复落在几个稳定机制上。这些机制可以同时解释他为什么显得懂行、为什么说话常常很快、也能解释他为什么一旦进入被持续追问的局面，语气和策略会迅速变化。</p>
+      <div class="summary">
+        <article class="card">
+          <h3>先占判断位</h3>
+          <p>无论是解耦、RGB、PSB，还是 AI 使用，他常常先给门槛、先做定性，再决定是否补充解释。</p>
+        </article>
+        <article class="card">
+          <h3>用经验代替铺陈</h3>
+          <p>他很少从抽象原则一路推到结论，更常见的是直接抛出做过的项目、见过的流程、踩过的坑。</p>
+        </article>
+        <article class="card">
+          <h3>把技术折回人</h3>
+          <p>技术问题在他那里经常会转成“谁懂、谁不懂、谁够不够基础、谁能不能判断”的能力分层。</p>
+        </article>
+        <article class="card">
+          <h3>追问一深就缩</h3>
+          <p>只要讨论从方案展示推进到调试、边界、读写权限、比较标准这类细层问题，他就容易改用“没必要”“不是实战”之类的降阶处理。</p>
+        </article>
+      </div>
+      <ul>
+        <li>在状态管理案例里，这个结构表现得最完整：前半段可以连续输出实现方案，后半段则在调试与黑板模式的追问中迅速切回“少量代码，不需要调试”。</li>
+        <li>在 PSB / PNG 案例里，他先做“连 psb 都不知道”的门槛判断，再说自己总要解释 PSB 比 PNG 好，但现场并没有顺势展开为可逐条核验的论证。</li>
+        <li>在解耦案例里，他先抬出“懂解耦就赢一半”，随后纠正“拆脚本不等于解耦”，最后给出事件中心、服务中心、单例管理器这些实践模板，显示出他更习惯掌握命名权和路径权，而不是交出一套可公开审查的理论说明。</li>
+        <li>在 RGB 和 AI 两组案例里，技术讨论都被收束到使用者本人的能力高低。这说明他对工具和概念的关注，经常不是孤立的，而是与人的资格判断绑在一起。</li>
+        <li>在合作经验案例里，这套结构的正面版本也很明显：只要边界清楚、效率高、彼此少拖累，他的判断会稳定落到赞许和认可，而不会转成防御。</li>
+      </ul>
+      <p>因此，Maxy 的核心特征并不适合概括成“暴躁”或“务实”这样的平面标签。更准确的说法是：他倾向于先占据判断位，用经验切片支撑资格感，用效率与落地性筛选方案；而当讨论开始要求他公开拆解自己的判断过程时，他的耐受度会明显下降，发言也会从解释转向缩句、抬门槛或回避。</p>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">阶段性结论</h2>
+      <p>综合这些案例，Maxy 在群里的技术形象并不是单一维度的“懂”或“不懂”，也不是简单的“能聊”或“不能聊”。更接近事实的描述是：他能够快速形成判断，能够用经验片段建立发言资格，也能够在很多问题上给出直接、有效、带落地感的建议；但与此同时，他对反向技术追问的耐受度偏低，尤其不喜欢自己的判断框架被持续拆开检视。</p>
+      <p>正因为这两面同时存在，他的表现才会出现一种稳定张力：当讨论顺着他的判断路径走时，他会显得准确、直接、有效；当讨论反过来要求他交出更细的论证、比较标准或调试逻辑时，他又会显得缩句、防御，甚至回避。用这个结构去理解 Maxy，比把他写成单纯的“技术权威”或者单纯的“群聊乐子人”，都更接近材料本身。</p>
+    </section>
+  </div>
+</body>
+</html>
